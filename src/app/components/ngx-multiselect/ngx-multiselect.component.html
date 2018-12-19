@@ -1,3 +1,55 @@
-<p>
-  ngx-multiselect works!
-</p>
+<h4>Great MultiSelect</h4>
+<div class="row">
+  <div class="col-12">
+    <div class="col-6">
+      <div class="btn-group" dropdown [insideClick]="true">
+        <button
+          id="button-custom-html"
+          dropdownToggle
+          type="button"
+          class="btn btn-primary dropdown-toggle"
+          aria-controls="dropdown-custom-html"
+        >
+          Button dropdown <span class="caret"></span>
+        </button>
+        <ul
+          id="dropdown-custom-html"
+          *dropdownMenu
+          class="dropdown-menu"
+          role="menu"
+          aria-labelledby="button-custom-html"
+        >
+          <li role="menuitem" *ngFor="let item of items">
+            <!-- <a class="dropdown-item" href="#">Action</a> -->
+            <input type="checkbox" /> {{ item.name }}
+          </li>
+          <!-- <li role="menuitem">
+            <a class="dropdown-item" href="#">Another action</a>
+          </li>
+          <li role="menuitem">
+            <a class="dropdown-item" href="#"
+              ><span class="badge badge-secondary">Some HTML here</span></a
+            >
+          </li> -->
+        </ul>
+      </div>
+      <!-- <select
+        class="selectpicker custom-select"
+        data-live-search="true"
+      >
+        <option *ngFor="let item of items" [value]="item.id">
+          <input type="checkbox" /> {{ item.name }}</option
+        >
+      </select>
+    </div>
+    <div class="col-6">
+      <input
+        class="form-control"
+        type="text"
+        name="selectedItems"
+        [(ngModel)]="selectedItems"
+        placeholder="selectedItems"
+      />-->
+    </div>
+  </div>
+</div>

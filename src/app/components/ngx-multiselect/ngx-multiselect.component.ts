@@ -6,33 +6,59 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./ngx-multiselect.component.scss"]
 })
 export class NgxMultiselectComponent implements OnInit {
-  selectedItems: string;
+  selectedItems: any[] = [];
   items: any[] = [];
+  filter: any = { id: null, name: "", isSelected: false };
+
   constructor() {}
 
   ngOnInit() {
-    this.selectedItems = "";
+    this.selectedItems = [];
     this.items.push(
       {
         id: 1,
-        name: "United-States"
+        name: "United-States",
+        isSelected: false
       },
       {
         id: 2,
-        name: "France"
+        name: "France",
+        isSelected: true
       },
       {
         id: 3,
-        name: "Japan"
+        name: "Japan",
+        isSelected: true
       },
       {
         id: 4,
-        name: "Australia"
+        name: "Australia",
+        isSelected: false
       },
       {
         id: 5,
-        name: "Great Britain"
+        name: "Great Britain",
+        isSelected: false
       }
     );
+  }
+
+  public selectItem(item: any): void {
+    item.isSelected = true;
+    this.selectedItems.push(item);
+  }
+
+  public selectAllItems(): void {
+    this.items.forEach(item => {
+      item.isSelected = true;
+      this.selectedItems.push(item);
+    });
+  }
+
+  public unSelectAllItems(): void {
+    this.items.forEach(item => {
+      item.isSelected = false;
+    });
+    this.selectedItems = [];
   }
 }

@@ -19,37 +19,31 @@
           role="menu"
           aria-labelledby="button-custom-html"
         >
-          <li role="menuitem" *ngFor="let item of items">
-            <!-- <a class="dropdown-item" href="#">Action</a> -->
-            <input type="checkbox" /> {{ item.name }}
+          <li>
+            <input
+              name="name"
+              type="text"
+              [(ngModel)]="filter.name"
+              placeholder="search Items"
+              class="form-control"
+            />
+            <button class="btn btn-default" (click)="selectAllItems()">
+              Select All
+            </button>
+            <button class="btn btn-default" (click)="unSelectAllItems()">
+              Unselect All
+            </button>
           </li>
-          <!-- <li role="menuitem">
-            <a class="dropdown-item" href="#">Another action</a>
+          <li role="menuitem" *ngFor="let item of (items | itemFilter: filter)">
+            <input
+              type="checkbox"
+              [checked]="item.isSelected"
+              (change)="selectItem(item)"
+            />
+            {{ item.name }}
           </li>
-          <li role="menuitem">
-            <a class="dropdown-item" href="#"
-              ><span class="badge badge-secondary">Some HTML here</span></a
-            >
-          </li> -->
         </ul>
       </div>
-      <!-- <select
-        class="selectpicker custom-select"
-        data-live-search="true"
-      >
-        <option *ngFor="let item of items" [value]="item.id">
-          <input type="checkbox" /> {{ item.name }}</option
-        >
-      </select>
-    </div>
-    <div class="col-6">
-      <input
-        class="form-control"
-        type="text"
-        name="selectedItems"
-        [(ngModel)]="selectedItems"
-        placeholder="selectedItems"
-      />-->
     </div>
   </div>
 </div>

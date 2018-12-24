@@ -1,48 +1,76 @@
 <h4>Great MultiSelect</h4>
 <div class="row">
   <div class="col-12">
-    <div class="col-6">
-      <div class="btn-group" dropdown [insideClick]="true">
-        <button
-          id="button-custom-html"
-          dropdownToggle
-          type="button"
-          class="btn btn-primary dropdown-toggle"
-          aria-controls="dropdown-custom-html"
-        >
-          Button dropdown <span class="caret"></span>
-        </button>
-        <ul
-          id="dropdown-custom-html"
-          *dropdownMenu
-          class="dropdown-menu"
-          role="menu"
-          aria-labelledby="button-custom-html"
-        >
-          <li>
-            <input
-              name="name"
-              type="text"
-              [(ngModel)]="filter.name"
-              placeholder="search Items"
-              class="form-control"
-            />
-            <button class="btn btn-default" (click)="selectAllItems()">
-              Select All
-            </button>
-            <button class="btn btn-default" (click)="unSelectAllItems()">
-              Unselect All
-            </button>
-          </li>
-          <li role="menuitem" *ngFor="let item of (items | itemFilter: filter)">
-            <input
-              type="checkbox"
-              [checked]="item.isSelected"
-              (change)="selectItem(item)"
-            />
-            {{ item.name }}
-          </li>
-        </ul>
+    <div class="row">
+      <div class="col-6">
+        <div class="btn-group" dropdown [insideClick]="true">
+          <button
+            id="button-custom-html"
+            dropdownToggle
+            type="button"
+            class="btn btn-primary dropdown-toggle"
+            aria-controls="dropdown-custom-html"
+          >
+            <span *ngIf="selectedItems.length > 0"
+              >{{ selectedItems[0].name }}, ({{ selectedItems.length }})</span
+            >
+            <span *ngIf="selectedItems.length == 0">No Items Selected</span>
+            <span class="caret"></span>
+          </button>
+          <ul
+            id="dropdown-custom-html"
+            *dropdownMenu
+            class="dropdown-menu row"
+            role="menu"
+            aria-labelledby="button-custom-html"
+          >
+            <li class="col-12">
+              <div class="row">
+                <div class="col-12">
+                  <input
+                    name="name"
+                    type="text"
+                    [(ngModel)]="filter.name"
+                    placeholder="search Items"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 d-flex justify-content-around">
+                  <button
+                    class="btn btn-default m-1"
+                    (click)="selectAllItems()"
+                  >
+                    Select All
+                  </button>
+                  <button
+                    class="btn btn-default m-1"
+                    (click)="unSelectAllItems()"
+                  >
+                    Unselect All
+                  </button>
+                </div>
+              </div>
+            </li>
+            <li
+              role="menuitem"
+              *ngFor="let item of (items | itemFilter: filter)"
+              class="col-12"
+            >
+              <div class="row">
+                <div class="col-12">
+                  <input
+                    type="checkbox"
+                    [checked]="item.isSelected"
+                    (change)="selectItem(item)"
+                  />
+                  {{ item.name }}
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>

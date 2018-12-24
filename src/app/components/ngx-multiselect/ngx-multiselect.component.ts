@@ -9,6 +9,7 @@ export class NgxMultiselectComponent implements OnInit {
   selectedItems: any[] = [];
   items: any[] = [];
   filter: any = { id: null, name: "", isSelected: false };
+  displaySelectedValue: string;
 
   constructor() {}
 
@@ -41,11 +42,17 @@ export class NgxMultiselectComponent implements OnInit {
         isSelected: false
       }
     );
+    this.setSelectedItems();
   }
 
   public selectItem(item: any): void {
-    item.isSelected = true;
-    this.selectedItems.push(item);
+    if (item.isSelected) {
+      item.isSelected = false;
+      this.selectedItems.splice(this.selectedItems.indexOf(item), 1);
+    } else {
+      item.isSelected = true;
+      this.selectedItems.push(item);
+    }
   }
 
   public selectAllItems(): void {
@@ -60,5 +67,14 @@ export class NgxMultiselectComponent implements OnInit {
       item.isSelected = false;
     });
     this.selectedItems = [];
+  }
+
+  //set selectedItems list on the firstLoad of the page
+  public setSelectedItems(): void {
+    this.items.forEach(item => {
+      if (item.isSelected) {
+        this.selectedItems.push(item);
+      }
+    });
   }
 }

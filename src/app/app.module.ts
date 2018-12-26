@@ -6,13 +6,15 @@ import { NgxMultiselectComponent } from "./components/ngx-multiselect/ngx-multis
 import { FormsModule } from "@angular/forms";
 import { BsDropdownModule } from "ngx-bootstrap/dropdown";
 import { ItemFilterPipe } from "./pipes/item-filter.pipe";
+import { NgxMultiselectChildrenComponent } from './components/ngx-multiselect-children/ngx-multiselect-children.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NgxMultiselectComponent,
     ItemFilterPipe,
-    ItemFilterPipe
+    ItemFilterPipe,
+    NgxMultiselectChildrenComponent
   ],
   imports: [BrowserModule, FormsModule, BsDropdownModule.forRoot()],
   providers: [],

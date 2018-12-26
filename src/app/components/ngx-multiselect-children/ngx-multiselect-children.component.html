@@ -1,0 +1,25 @@
+<ul>
+  <li
+    role="menuitem"
+    *ngFor="let item of (items | itemFilter: filter)"
+    class="col-12"
+  >
+    <div class="row">
+      <div class="col-12">
+        <input
+          type="checkbox"
+          [checked]="item.isSelected"
+          (change)="selectItem(item)"
+        />
+        {{ item.name }}
+      </div>
+      <app-ngx-multiselect-children
+        *ngIf="item.children.length > 0"
+        [selectAll]="selectAll"
+        [unSelectAll]="unSelectAll"
+        [items]="item.children"
+        [filter]="filter"
+      ></app-ngx-multiselect-children>
+    </div>
+  </li>
+</ul>

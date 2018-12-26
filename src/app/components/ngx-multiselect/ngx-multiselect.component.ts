@@ -10,38 +10,96 @@ export class NgxMultiselectComponent implements OnInit {
   items: any[] = [];
   filter: any = { id: null, name: "", isSelected: false };
   displaySelectedValue: string;
+  selectAll: Boolean;
+  unSelectAll: Boolean;
 
   constructor() {}
 
   ngOnInit() {
     this.selectedItems = [];
-    this.items.push(
-      {
-        id: 1,
-        name: "United-States",
-        isSelected: false
-      },
-      {
-        id: 2,
-        name: "France",
-        isSelected: true
-      },
-      {
-        id: 3,
-        name: "Japan",
-        isSelected: true
-      },
-      {
-        id: 4,
-        name: "Australia",
-        isSelected: false
-      },
-      {
-        id: 5,
-        name: "Great Britain",
-        isSelected: false
-      }
-    );
+    this.items.push({
+      id: 1,
+      name: "World",
+      isSelected: false,
+      children: [
+        {
+          id: 2,
+          name: "America",
+          isSelected: false,
+          children: [
+            {
+              id: 3,
+              name: "Canada",
+              isSelected: false,
+              children: []
+            },
+            {
+              id: 4,
+              name: "United-States",
+              isSelected: false,
+              children: []
+            },
+            {
+              id: 5,
+              name: "Mexico",
+              isSelected: false,
+              children: []
+            }
+          ]
+        },
+        {
+          id: 6,
+          name: "Europe",
+          isSelected: false,
+          children: [
+            {
+              id: 7,
+              name: "France",
+              isSelected: true,
+              children: []
+            },
+            {
+              id: 8,
+              name: "France",
+              isSelected: true,
+              children: []
+            }
+          ]
+        },
+        {
+          id: 9,
+          name: "Asia",
+          isSelected: false,
+          children: [
+            {
+              id: 10,
+              name: "China",
+              isSelected: true,
+              children: []
+            },
+            {
+              id: 11,
+              name: "Japan",
+              isSelected: true,
+              children: []
+            }
+          ]
+        },
+        {
+          id: 12,
+          name: "Oceania",
+          isSelected: true,
+          children: [
+            {
+              id: 13,
+              name: "Australia",
+              isSelected: false,
+              children: []
+            }
+          ]
+        }
+      ]
+    });
     this.setSelectedItems();
   }
 
@@ -56,6 +114,9 @@ export class NgxMultiselectComponent implements OnInit {
   }
 
   public selectAllItems(): void {
+    this.selectAll = true;
+    this.unSelectAll = false;
+
     this.items.forEach(item => {
       item.isSelected = true;
       this.selectedItems.push(item);
@@ -63,6 +124,9 @@ export class NgxMultiselectComponent implements OnInit {
   }
 
   public unSelectAllItems(): void {
+    this.unSelectAll = true;
+    this.selectAll = false;
+
     this.items.forEach(item => {
       item.isSelected = false;
     });

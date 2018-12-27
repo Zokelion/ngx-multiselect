@@ -7,13 +7,15 @@ import { Component, OnInit, Input } from "@angular/core";
 })
 export class NgxMultiselectChildrenComponent implements OnInit {
   @Input()
-  selectAll: Boolean;
+  selectAll: boolean;
   @Input()
-  unSelectAll: Boolean;
+  unSelectAll: boolean;
   @Input()
   items: any[];
   @Input()
   filter: any;
+  @Input()
+  isFirstLevel: boolean;
 
   constructor() {}
 

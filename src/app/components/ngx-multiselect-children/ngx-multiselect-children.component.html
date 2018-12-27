@@ -1,11 +1,19 @@
-<ul>
+<ul [ngClass]="{ 'p-0': isFirstLevel }" class="no-style-list">
   <li
     role="menuitem"
     *ngFor="let item of (items | itemFilter: filter)"
     class="col-12"
   >
     <div class="row">
-      <div class="col-12">
+      <div
+        class="col-12"
+        [ngClass]="{
+          'pr-2': item.children.length == 0,
+          'font-weight-bold': item.children.length > 0,
+          'font-italic': item.isSelected,
+          'text-muted': item.isSelected
+        }"
+      >
         <input
           type="checkbox"
           [checked]="item.isSelected"
@@ -19,6 +27,7 @@
         [unSelectAll]="unSelectAll"
         [items]="item.children"
         [filter]="filter"
+        [isFirstLevel]="false"
       ></app-ngx-multiselect-children>
     </div>
   </li>

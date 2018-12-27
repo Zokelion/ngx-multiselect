@@ -37,7 +37,20 @@ export class NgxMultiselectComponent implements OnInit {
               id: 4,
               name: "United-States",
               isSelected: false,
-              children: []
+              children: [
+                {
+                  id: 14,
+                  name: "Arizona",
+                  isSelected: false,
+                  children: []
+                },
+                {
+                  id: 15,
+                  name: "Washington",
+                  isSelected: false,
+                  children: []
+                }
+              ]
             },
             {
               id: 5,
@@ -60,7 +73,7 @@ export class NgxMultiselectComponent implements OnInit {
             },
             {
               id: 8,
-              name: "France",
+              name: "Deutschland",
               isSelected: true,
               children: []
             }

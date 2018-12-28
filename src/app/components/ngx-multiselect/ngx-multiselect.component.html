@@ -1,53 +1,59 @@
 <div class="btn-group" dropdown [insideClick]="true">
-  <button
-    id="button-custom-html"
-    dropdownToggle
-    type="button"
-    class="btn btn-primary dropdown-toggle"
-    aria-controls="dropdown-custom-html"
-  >
-    <span *ngIf="selectedItems.length > 0"
-      >{{ selectedItems[0].name }}, ({{ selectedItems.length }})</span
+    <button
+        id="button-custom-html"
+        dropdownToggle
+        type="button"
+        class="btn btn-primary dropdown-toggle"
+        aria-controls="dropdown-custom-html"
     >
-    <span *ngIf="selectedItems.length == 0">No Items Selected</span>
-    <span class="caret"></span>
-  </button>
-  <ul
-    id="dropdown-custom-html"
-    *dropdownMenu
-    class="dropdown-menu row"
-    role="menu"
-    aria-labelledby="button-custom-html"
-  >
-    <li class="col-12">
-      <div class="row">
-        <div class="col-12">
-          <input
-            name="name"
-            type="text"
-            [(ngModel)]="filter.name"
-            placeholder="search Items"
-            class="form-control"
-          />
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12 d-flex justify-content-around">
-          <button class="btn btn-default m-1" (click)="selectAllItems()">
-            Select All
-          </button>
-          <button class="btn btn-default m-1" (click)="unSelectAllItems()">
-            Unselect All
-          </button>
-        </div>
-      </div>
-    </li>
-    <app-ngx-multiselect-children
-      [selectAll]="selectAll"
-      [unSelectAll]="unSelectAll"
-      [items]="items"
-      [filter]="filter"
-      [isFirstLevel]="true"
-    ></app-ngx-multiselect-children>
-  </ul>
+        <span>{{ buttonLabel }}</span> <span class="caret"></span>
+    </button>
+    <ul
+        id="dropdown-custom-html"
+        *dropdownMenu
+        class="dropdown-menu row"
+        role="menu"
+        aria-labelledby="button-custom-html"
+    >
+        <li class="col-12">
+            <div class="row">
+                <div class="col-12">
+                    <input
+                        name="name"
+                        type="text"
+                        [(ngModel)]="filter.name"
+                        placeholder="search Items"
+                        class="form-control"
+                    />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 d-flex justify-content-around">
+                    <button class="btn btn-default m-1" (click)="selectAllItems(items)">
+                        Select All
+                    </button>
+                    <button class="btn btn-default m-1" (click)="unSelectAllItems(items)">
+                        Unselect All
+                    </button>
+                </div>
+                <div class="col-12">
+                    <input
+                        type="checkbox"
+                        [checked]="includeContainer"
+                        (change)="includeContainer = !includeContainer"
+                    />
+                    Include container in list
+                </div>
+            </div>
+            <div class="divider dropdown-divider"></div>
+        </li>
+        <app-ngx-multiselect-children
+            *ngFor="let item of items"
+            [filter]="filter"
+            [isFirstLevel]="true"
+            (itemSelected)="childSelected($event)"
+            [includeContainer]="includeContainer"
+            [parentItem]="item"
+        ></app-ngx-multiselect-children>
+    </ul>
 </div>

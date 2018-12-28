@@ -1,34 +1,32 @@
 <ul [ngClass]="{ 'p-0': isFirstLevel }" class="no-style-list">
-  <li
-    role="menuitem"
-    *ngFor="let item of (items | itemFilter: filter)"
-    class="col-12"
-  >
-    <div class="row">
-      <div
-        class="col-12"
-        [ngClass]="{
-          'pr-2': item.children.length == 0,
-          'font-weight-bold': item.children.length > 0,
-          'font-italic': item.isSelected,
-          'text-muted': item.isSelected
-        }"
-      >
-        <input
-          type="checkbox"
-          [checked]="item.isSelected"
-          (change)="selectItem(item)"
-        />
-        {{ item.name }}
-      </div>
-      <app-ngx-multiselect-children
-        *ngIf="item.children.length > 0"
-        [selectAll]="selectAll"
-        [unSelectAll]="unSelectAll"
-        [items]="item.children"
-        [filter]="filter"
-        [isFirstLevel]="false"
-      ></app-ngx-multiselect-children>
-    </div>
-  </li>
+    <li role="menuitem" class="col-12">
+        <div class="row">
+            <div
+                class="col-12"
+                [ngClass]="{
+                    'pr-2': parentItem.children.length == 0,
+                    'font-weight-bold': parentItem.children.length > 0,
+                    'font-italic': parentItem.isSelected,
+                    'text-muted': parentItem.isSelected
+                }"
+            >
+                <input
+                    type="checkbox"
+                    [(ngModel)]="parentItem.isSelected"
+                    (change)="selectItem(parentItem)"
+                />
+                {{ parentItem.name }}
+            </div>
+            <ng-container *ngIf="parentItem.children.length > 0">
+                <app-ngx-multiselect-children
+                    *ngFor="let item of (parentItem.children | itemFilter: filter)"
+                    [filter]="filter"
+                    [isFirstLevel]="false"
+                    (itemSelected)="childSelected($event)"
+                    [includeContainer]="includeContainer"
+                    [parentItem]="item"
+                ></app-ngx-multiselect-children>
+            </ng-container>
+        </div>
+    </li>
 </ul>

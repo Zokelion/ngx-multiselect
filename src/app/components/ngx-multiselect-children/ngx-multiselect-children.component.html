@@ -1,4 +1,4 @@
-<ul [ngClass]="{ 'p-0': isFirstLevel }" class="no-style-list">
+<ul *ngIf="isVisible" [ngClass]="{ 'p-0': isFirstLevel }" class="no-style-list">
     <li role="menuitem" class="col-12">
         <div class="row">
             <div
@@ -19,7 +19,7 @@
             </div>
             <ng-container *ngIf="parentItem.children.length > 0">
                 <app-ngx-multiselect-children
-                    *ngFor="let item of (parentItem.children | itemFilter: filter)"
+                    *ngFor="let item of parentItem.children"
                     [filter]="filter"
                     [isFirstLevel]="false"
                     (itemSelected)="childSelected($event)"

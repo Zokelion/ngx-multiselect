@@ -49,7 +49,7 @@
         </li>
         <app-ngx-multiselect-children
             *ngFor="let item of items"
-            [filter]="filter"
+            [filter]="filter.name"
             [isFirstLevel]="true"
             (itemSelected)="childSelected($event)"
             [includeContainer]="includeContainer"

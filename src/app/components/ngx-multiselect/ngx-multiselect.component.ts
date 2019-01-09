@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { ItemSelectedEvent } from '../../models/item-selected-event.model';
+import { Item } from 'src/app/models/item.model';
 
 @Component({
     selector: 'app-ngx-multiselect',
@@ -7,12 +8,14 @@ import { ItemSelectedEvent } from '../../models/item-selected-event.model';
     styleUrls: ['./ngx-multiselect.component.scss']
 })
 export class NgxMultiselectComponent implements OnInit {
-    selectedItems: any[] = [];
-    items: any[] = [];
+    selectedItems: Item[] = [];
+    items: Item[] = [];
     filter: any = { id: null, name: '', isSelected: false };
     displaySelectedValue: string;
-    buttonLabel: string;
+    buttonLabel = 'No Items Selected';
     includeContainer: boolean;
+    @Output()
+    itemSelected: EventEmitter<ItemSelectedEvent> = new EventEmitter<ItemSelectedEvent>();
 
     constructor() {}
 
@@ -117,37 +120,20 @@ export class NgxMultiselectComponent implements OnInit {
         this.setLabel();
     }
 
-    public selectAllItems(items: any[]): void {
-        items.forEach(item => {
-            item.isSelected = true;
-            if (item.children.length > 0) {
-                this.selectAllItems(item.children);
-            }
-            this.selectedItems.push(item);
-        });
-    }
-
-    public unSelectAllItems(items: any[]): void {
-        items.forEach(item => {
-            item.isSelected = false;
-            if (item.children.length > 0) {
-                this.unSelectAllItems(item.children);
-            }
-        });
-        this.selectedItems = [];
-    }
-
     public childSelected(eventItem: ItemSelectedEvent): void {
         this.selectedItems = eventItem.selectedItems;
-        console.log('selected : ', this.selectedItems);
         this.setLabel();
+        this.itemSelected.emit(eventItem);
     }
 
     public setLabel(): void {
-        if (this.selectedItems.length === 0) {
-            this.buttonLabel = 'No Items Selected';
-        } else {
-            this.buttonLabel = this.selectedItems[0].name + ', (' + this.selectedItems.length + ')';
-        }
+        setTimeout(() => {
+            if (!this.selectedItems || !this.selectedItems.length) {
+                this.buttonLabel = 'No Items Selected';
+            } else {
+                this.buttonLabel =
+                    this.selectedItems[0].name + ', (' + this.selectedItems.length + ')';
+            }
+        }, 0);
     }
 }

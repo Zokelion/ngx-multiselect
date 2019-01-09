@@ -1,14 +1,6 @@
-import {
-    Component,
-    OnInit,
-    Input,
-    Output,
-    EventEmitter,
-    SimpleChange,
-    OnChanges,
-    SimpleChanges
-} from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { ItemSelectedEvent } from '../../models/item-selected-event.model';
+import { Item } from 'src/app/models/item.model';
 
 @Component({
     selector: 'app-ngx-multiselect-children',
@@ -17,15 +9,18 @@ import { ItemSelectedEvent } from '../../models/item-selected-event.model';
 })
 export class NgxMultiselectChildrenComponent implements OnInit, OnChanges {
     @Input()
-    filter: any;
+    filter: string;
     @Input()
     isFirstLevel: boolean;
     @Input()
     includeContainer: boolean;
     @Input()
-    parentItem: any;
+    parentItem: Item;
 
-    selectedItems: any[] = [];
+    isVisible = true;
+    selectedItems: Item[] = [];
+
+    matchesFilter: boolean;
 
     @Output()
     itemSelected: EventEmitter<ItemSelectedEvent> = new EventEmitter<ItemSelectedEvent>();
@@ -36,8 +31,8 @@ export class NgxMultiselectChildrenComponent implements OnInit, OnChanges {
         this.setSelectedItems();
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
-        console.log(this._countChildren(), 'children found for', this.parentItem.name);
+    ngOnChanges() {
+        this.updateFilter();
     }
 
     public selectItem(): void {
@@ -61,7 +56,8 @@ export class NgxMultiselectChildrenComponent implements OnInit, OnChanges {
             }
         } else {
             if (this.parentItem.isSelected) {
-                // Here we have childrens and a selected parent, we check if parent must be include in the list and add all childrens of the branch
+                // Here we have childrens and a selected parent
+                // we check if parent must be include in the list and add all childrens of the branch
                 if (this.includeContainer) {
                     this.parentItem.isSelected = true;
                     this.selectedItems.push(this.parentItem);
@@ -72,7 +68,8 @@ export class NgxMultiselectChildrenComponent implements OnInit, OnChanges {
                 }
                 this.selectAllChildren();
             } else {
-                // Here we have childrens and an unselected parent, we check if parent must be include in the list and remove all childrens of the branch
+                // Here we have childrens and an unselected parent
+                // we check if parent must be include in the list and remove all childrens of the branch
                 if (this.includeContainer) {
                     this.parentItem.isSelected = false;
                     this.selectedItems.splice(this.selectedItems.indexOf(this.parentItem), 1);
@@ -147,9 +144,11 @@ export class NgxMultiselectChildrenComponent implements OnInit, OnChanges {
 
     // set selectedItems list on the firstLoad of the page
     public setSelectedItems(): void {
-        this.parentItem.children.forEach(item => {
-            // this.childSelected({ item });
-        });
+        setTimeout(() => {
+            if (this.parentItem.isSelected) {
+                this.selectItem();
+            }
+        }, 0);
     }
     private _countChildren(item?: any): number {
         let acc = 0;
@@ -168,5 +167,20 @@ export class NgxMultiselectChildrenComponent implements OnInit, OnChanges {
         }
 
         return acc;
+    }
+
+    public matchFilter(item: Item): boolean {
+        let result = false;
+        item.children.forEach(child => {
+            if (this.matchFilter(child)) {
+                result = true;
+            }
+        });
+        const regex = new RegExp('.*' + this.filter + '.*', 'gi');
+        return regex.test(item.name) || result;
+    }
+
+    public updateFilter(): void {
+        this.isVisible = this.matchFilter(this.parentItem);
     }
 }

@@ -10,12 +10,14 @@
                     'text-muted': parentItem.isSelected
                 }"
             >
-                <input
-                    type="checkbox"
-                    [(ngModel)]="parentItem.isSelected"
-                    (change)="selectItem(parentItem)"
-                />
-                {{ parentItem.name }}
+                <label>
+                    <input
+                        type="checkbox"
+                        [(ngModel)]="parentItem.isSelected"
+                        (change)="selectItem(parentItem)"
+                    />
+                    <div class="check-box">{{ parentItem.name }}</div>
+                </label>
             </div>
             <ng-container *ngIf="parentItem.children.length > 0">
                 <app-ngx-multiselect-children

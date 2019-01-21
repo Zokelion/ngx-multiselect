@@ -16,7 +16,7 @@
                         [(ngModel)]="parentItem.isSelected"
                         (change)="selectItem(parentItem)"
                     />
-                    <div class="check-box">{{ parentItem.name }}</div>
+                    <span class="check-box"></span> {{ parentItem.name }}
                 </label>
             </div>
             <ng-container *ngIf="parentItem.children.length > 0">

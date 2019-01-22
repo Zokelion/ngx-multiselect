@@ -1,34 +1,31 @@
-<ul *ngIf="isVisible" [ngClass]="{ 'p-0': isFirstLevel }" class="no-style-list">
-    <li role="menuitem" class="col-12">
-        <div class="row">
-            <div
-                class="col-12"
-                [ngClass]="{
-                    'pr-2': parentItem.children.length == 0,
-                    'font-weight-bold': parentItem.children.length > 0,
-                    'font-italic': parentItem.isSelected,
-                    'text-muted': parentItem.isSelected
-                }"
-            >
-                <label>
-                    <input
-                        type="checkbox"
-                        [(ngModel)]="parentItem.isSelected"
-                        (change)="selectItem(parentItem)"
-                    />
-                    <span class="check-box"></span> {{ parentItem.name }}
-                </label>
-            </div>
-            <ng-container *ngIf="parentItem.children.length > 0">
-                <app-ngx-multiselect-children
-                    *ngFor="let item of parentItem.children"
-                    [filter]="filter"
-                    [isFirstLevel]="false"
-                    (itemSelected)="childSelected($event)"
-                    [includeContainer]="includeContainer"
-                    [parentItem]="item"
-                ></app-ngx-multiselect-children>
-            </ng-container>
+<ul *ngIf="isVisible" class="no-style-list px-3">
+    <!-- [ngClass]="{ 'p-0': isFirstLevel, 'px-3': !isFirstLevel }" -->
+    <li role="menuitem">
+        <div
+            [ngClass]="{
+                'font-weight-bold': parentItem.children.length > 0,
+                'font-italic': parentItem.isSelected,
+                'text-muted': parentItem.isSelected
+            }"
+        >
+            <label>
+                <input
+                    type="checkbox"
+                    [(ngModel)]="parentItem.isSelected"
+                    (change)="selectItem(parentItem)"
+                />
+                <span class="check-box"></span> {{ parentItem.name }}
+            </label>
         </div>
+        <ng-container *ngIf="parentItem.children.length > 0">
+            <app-ngx-multiselect-children
+                *ngFor="let item of parentItem.children"
+                [filter]="filter"
+                [isFirstLevel]="false"
+                (itemSelected)="childSelected($event)"
+                [includeContainer]="includeContainer"
+                [parentItem]="item"
+            ></app-ngx-multiselect-children>
+        </ng-container>
     </li>
 </ul>

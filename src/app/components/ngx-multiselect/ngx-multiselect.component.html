@@ -1,21 +1,14 @@
-<div class="btn-group" dropdown [insideClick]="true">
-    <button
-        id="button-custom-html"
-        dropdownToggle
-        type="button"
-        class="btn btn-primary dropdown-toggle"
-        aria-controls="dropdown-custom-html"
-    >
-        <span>{{ buttonLabel }}</span> <span class="caret"></span>
-    </button>
-    <ul
-        id="dropdown-custom-html"
-        *dropdownMenu
-        class="dropdown-menu row"
-        role="menu"
-        aria-labelledby="button-custom-html"
-    >
-        <li class="col-12">
+<button type="button" class="btn btn-primary" (click)="animateToggle()">
+    <span>{{ buttonLabel }}</span>
+    <fa-icon
+        [icon]="faCaretRight"
+        class="d-inline-block"
+        [ngClass]="{ open: state === 'open' }"
+    ></fa-icon>
+</button>
+<ul class="toggle-content list-group" [ngClass]="{ open: state === 'open' }">
+    <ng-scrollbar>
+        <li class="px-3 py-0">
             <div class="row">
                 <div class="col-12">
                     <input
@@ -23,16 +16,16 @@
                         type="text"
                         [(ngModel)]="filter.name"
                         placeholder="search Items"
-                        class="form-control"
+                        class="form-control mt-2 mb-2"
                     />
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-12 d-flex justify-content-around">
-                    <button class="btn btn-default m-1" (click)="selectAllItems(items)">
+                <div class="col-6">
+                    <button class="btn btn-default w-100" (click)="selectAllItems(items)">
                         Select All
                     </button>
-                    <button class="btn btn-default m-1" (click)="unSelectAllItems(items)">
+                </div>
+                <div class="col-6">
+                    <button class="btn btn-default w-100" (click)="unSelectAllItems(items)">
                         Unselect All
                     </button>
                 </div>
@@ -44,8 +37,8 @@
                     />
                     Include container in list
                 </div>
+                <div class="divider dropdown-divider col-12"></div>
             </div>
-            <div class="divider dropdown-divider"></div>
         </li>
         <app-ngx-multiselect-children
             *ngFor="let item of items"
@@ -55,5 +48,5 @@
             [includeContainer]="includeContainer"
             [parentItem]="item"
         ></app-ngx-multiselect-children>
-    </ul>
-</div>
+    </ng-scrollbar>
+</ul>

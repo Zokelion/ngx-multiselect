@@ -2,6 +2,10 @@
     <app-ngx-multiselect
         (itemSelected)="childSelected($event)"
         [items]="paramItems"
+        [selectAllButtonLabel]="'Select All'"
+        [unSelectAllButtonLabel]="'Unselect All'"
+        [defaultToggleButtonLabel]="'No Items Selected'"
+        [placeholder]="'Search Items'"
     ></app-ngx-multiselect>
 </div>
 <!-- <div class="row">

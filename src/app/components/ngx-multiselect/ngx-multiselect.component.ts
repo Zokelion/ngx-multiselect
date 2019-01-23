@@ -10,20 +10,28 @@ import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 })
 export class NgxMultiselectComponent implements OnInit {
     // icons
-    faCaretRight = faCaretRight;
+    public faCaretRight = faCaretRight;
 
     @Input()
-    items: Item[];
+    public items: Item[];
+    @Input()
+    public selectAllButtonLabel = 'Select All';
+    @Input()
+    public unSelectAllButtonLabel = 'Unselect All';
+    @Input()
+    public defaultToggleButtonLabel = 'No Items Selected';
+    @Input()
+    public placeholder = 'Search Items';
 
     @Output()
-    itemSelected: EventEmitter<ItemSelectedEvent> = new EventEmitter<ItemSelectedEvent>();
+    public itemSelected: EventEmitter<ItemSelectedEvent> = new EventEmitter<ItemSelectedEvent>();
 
-    selectedItems: Item[] = [];
-    filter: any = { id: null, name: '', isSelected: false };
-    displaySelectedValue: string;
-    buttonLabel = 'No Items Selected';
-    includeContainer: boolean;
-    state = 'closed';
+    public selectedItems: Item[] = [];
+    public filter: any = { id: null, name: '', isSelected: false };
+    public displaySelectedValue: string;
+    public toggleButtonLabel: string;
+    public includeContainer: boolean;
+    public state = 'closed';
 
     constructor() {}
 
@@ -41,9 +49,9 @@ export class NgxMultiselectComponent implements OnInit {
     public setLabel(): void {
         setTimeout(() => {
             if (!this.selectedItems || !this.selectedItems.length) {
-                this.buttonLabel = 'No Items Selected';
+                this.toggleButtonLabel = this.defaultToggleButtonLabel;
             } else {
-                this.buttonLabel =
+                this.toggleButtonLabel =
                     this.selectedItems[0].name + ', (' + this.selectedItems.length + ')';
             }
         }, 0);

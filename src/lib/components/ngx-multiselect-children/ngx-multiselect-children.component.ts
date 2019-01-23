@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { ItemSelectedEvent } from '../../models/item-selected-event.model';
-import { Item } from 'src/app/models/item.model';
+import { Item } from '../../models/item.model';
 import { MultiSelectService } from '../../services/multi-select.service';
 
 @Component({

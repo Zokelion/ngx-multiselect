@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { ItemSelectedEvent } from '../../models/item-selected-event.model';
-import { Item } from 'src/app/models/item.model';
+import { Item } from '../../models/item.model';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { MultiSelectService } from '../../services/multi-select.service';
 

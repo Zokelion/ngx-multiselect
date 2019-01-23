@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { ItemSelectedEvent } from '../../models/item-selected-event.model';
 import { Item } from 'src/app/models/item.model';
+import { SelectAllItemsService } from '../../services/select-all-items.service';
 
 @Component({
     selector: 'app-ngx-multiselect-children',
@@ -25,17 +26,71 @@ export class NgxMultiselectChildrenComponent implements OnInit, OnChanges {
     @Output()
     itemSelected: EventEmitter<ItemSelectedEvent> = new EventEmitter<ItemSelectedEvent>();
 
-    constructor() {}
+    constructor(private _selectAllItemsService: SelectAllItemsService) {}
 
     ngOnInit() {
         this.setSelectedItems();
+        this._selectAllItemsService.selectAll.subscribe(() => {
+            this.selectItem();
+        });
+        this._selectAllItemsService.unSelectAll.subscribe(() => {
+            this.unSelectItem();
+        });
     }
 
     ngOnChanges() {
         this.updateFilter();
     }
 
+    public unSelectItem(): void {
+        if (this.parentItem.children.length === 0) {
+            this.parentItem.isSelected = false;
+            this.selectedItems.splice(this.selectedItems.indexOf(this.parentItem), 1);
+            this.itemSelected.emit({
+                item: this.parentItem,
+                selectedItems: this.selectedItems
+            });
+        } else {
+            // Here we have childrens and an unselected parent
+            // we check if parent must be include in the list and remove all childrens of the branch
+            if (this.includeContainer) {
+                this.parentItem.isSelected = false;
+                this.selectedItems.splice(this.selectedItems.indexOf(this.parentItem), 1);
+                this.itemSelected.emit({
+                    item: this.parentItem,
+                    selectedItems: this.selectedItems
+                });
+            }
+            this.unSelectAllChildren();
+        }
+    }
+
     public selectItem(): void {
+        this.unSelectItem();
+        if (this.parentItem.children.length === 0) {
+            // Here we have no children and no selected item => We're handling a click on an unchecked leaf
+            this.parentItem.isSelected = true;
+            this.selectedItems.push(this.parentItem);
+            this.itemSelected.emit({
+                item: this.parentItem,
+                selectedItems: this.selectedItems
+            });
+        } else {
+            // Here we have childrens and a selected parent
+            // we check if parent must be include in the list and add all childrens of the branch
+            if (this.includeContainer) {
+                this.parentItem.isSelected = true;
+                this.selectedItems.push(this.parentItem);
+                this.itemSelected.emit({
+                    item: this.parentItem,
+                    selectedItems: this.selectedItems
+                });
+            }
+            this.selectAllChildren();
+        }
+    }
+
+    public itemClicked(): void {
         if (this.parentItem.children.length === 0) {
             // Here we have no children and no selected item => We're handling a click on an unchecked leaf
             if (this.selectedItems.length === 0) {
@@ -146,7 +201,7 @@ export class NgxMultiselectChildrenComponent implements OnInit, OnChanges {
     public setSelectedItems(): void {
         setTimeout(() => {
             if (this.parentItem.isSelected) {
-                this.selectItem();
+                this.itemClicked();
             }
         }, 0);
     }

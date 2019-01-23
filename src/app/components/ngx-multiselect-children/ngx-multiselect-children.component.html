@@ -12,7 +12,7 @@
                 <input
                     type="checkbox"
                     [(ngModel)]="parentItem.isSelected"
-                    (change)="selectItem(parentItem)"
+                    (change)="itemClicked(parentItem)"
                 />
                 <span class="check-box"></span> {{ parentItem.name }}
             </label>

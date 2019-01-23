@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { ItemSelectedEvent } from '../../models/item-selected-event.model';
 import { Item } from 'src/app/models/item.model';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
-import { SelectAllItemsService } from '../../services/select-all-items.service';
+import { MultiSelectService } from '../../services/multi-select.service';
 
 @Component({
     selector: 'app-ngx-multiselect',
@@ -14,7 +14,7 @@ export class NgxMultiselectComponent implements OnInit {
     public faCaretRight = faCaretRight;
 
     @Input()
-    public items: Item[];
+    public items: Item[] = [];
     @Input()
     public selectAllButtonLabel = 'Select All';
     @Input()
@@ -34,7 +34,7 @@ export class NgxMultiselectComponent implements OnInit {
     public includeContainer: boolean;
     public state = 'closed';
 
-    constructor(private _selectAllItemsService: SelectAllItemsService) {}
+    constructor(private _selectAllItemsService: MultiSelectService) {}
 
     ngOnInit() {
         this.selectedItems = this.selectedItems.concat(this.items);

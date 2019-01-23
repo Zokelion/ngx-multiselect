@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { ItemSelectedEvent } from '../../models/item-selected-event.model';
 import { Item } from 'src/app/models/item.model';
-import { SelectAllItemsService } from '../../services/select-all-items.service';
+import { MultiSelectService } from '../../services/multi-select.service';
 
 @Component({
     selector: 'app-ngx-multiselect-children',
@@ -26,7 +26,7 @@ export class NgxMultiselectChildrenComponent implements OnInit, OnChanges {
     @Output()
     itemSelected: EventEmitter<ItemSelectedEvent> = new EventEmitter<ItemSelectedEvent>();
 
-    constructor(private _selectAllItemsService: SelectAllItemsService) {}
+    constructor(private _selectAllItemsService: MultiSelectService) {}
 
     ngOnInit() {
         this.setSelectedItems();

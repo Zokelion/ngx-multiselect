@@ -17,7 +17,7 @@ NgxMultiSelect can be configured for changing button's label.
 ## Installation
 
 ```shell
-npm install ngx-multiselect --save
+npm install @zokelion/ngx-multiselect --save
 
 ```
 

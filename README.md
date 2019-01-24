@@ -31,7 +31,7 @@ the component should be declared in your html code like this :
 ```html
 <app-ngx-multiselect
     (itemSelected)="getSelectedItem($event)"
-    [items]="paramItems"
+    [items]="items"
     [selectAllButtonLabel]="'Select All'"
     [unSelectAllButtonLabel]="'Unselect All'"
     [defaultToggleButtonLabel]="'No Items Selected'"
@@ -54,7 +54,9 @@ In order to use the event class import it in your component and declare a new fu
 
 ```typescript
     // import to be able to use the event
-    import { ItemSelectedEvent } from './models/item-selected-event.model';
+    import { ItemSelectedEvent } from '@zokelion/ngx-multiselect/models/item-selected-event.model';
+    // import this model for the type of your list
+    import { Item } from '@zokelion/ngx-multiselect/models/item.model';
 
     // function for getting and using the list
     public getSelectedItem(eventItem: ItemSelectedEvent): void {

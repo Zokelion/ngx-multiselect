@@ -1,12 +1,12 @@
 <div class="w-25">
-    <app-ngx-multiselect
+    <ngx-multiselect
         (itemSelected)="childSelected($event)"
         [items]="paramItems"
         [selectAllButtonLabel]="'Select All'"
         [unSelectAllButtonLabel]="'Unselect All'"
         [defaultToggleButtonLabel]="'No Items Selected'"
         [placeholder]="'Search Items'"
-    ></app-ngx-multiselect>
+    ></ngx-multiselect>
 </div>
 <div class="row">
     <div class="col-12">

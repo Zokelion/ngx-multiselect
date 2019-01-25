@@ -1,7 +1,7 @@
 {
     "$schema": "../../node_modules/ng-packagr/package.schema.json",
     "name": "@zokelion/ngx-multiselect",
-    "version": "1.0.2",
+    "version": "1.0.4",
     "description": "Angular recursive select tree",
     "repository": {
         "type": "git",

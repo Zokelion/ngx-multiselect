@@ -40,12 +40,12 @@
             <div class="divider dropdown-divider col-12"></div>
         </div>
     </li>
-    <app-ngx-multiselect-children
+    <ngx-multiselect-children
         *ngFor="let item of items"
         [filter]="filter.name"
         [isFirstLevel]="true"
         (itemSelected)="childSelected($event)"
         [includeContainer]="includeContainer"
         [parentItem]="item"
-    ></app-ngx-multiselect-children>
+    ></ngx-multiselect-children>
 </ul>

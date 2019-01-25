@@ -4,7 +4,7 @@ import { Item } from '../../models/item.model';
 import { MultiSelectService } from '../../services/multi-select.service';
 
 @Component({
-    selector: 'app-ngx-multiselect-children',
+    selector: 'ngx-multiselect-children',
     templateUrl: './ngx-multiselect-children.component.html',
     styleUrls: ['./ngx-multiselect-children.component.scss']
 })
@@ -138,7 +138,7 @@ export class NgxMultiselectChildrenComponent implements OnInit, OnChanges {
         }
     }
 
-    public selectAllChildren(items?: any[]): void {
+    public selectAllChildren(items?: Item[]): void {
         if (!items) {
             items = this.parentItem.children;
         }
@@ -151,13 +151,15 @@ export class NgxMultiselectChildrenComponent implements OnInit, OnChanges {
                     this.itemSelected.emit({ item, selectedItems: this.selectedItems });
                 }
             } else {
-                this.selectedItems.push(item);
-                this.itemSelected.emit({ item, selectedItems: this.selectedItems });
+                if (this.selectedItems.indexOf(item) === -1) {
+                    this.selectedItems.push(item);
+                    this.itemSelected.emit({ item, selectedItems: this.selectedItems });
+                }
             }
         });
     }
 
-    public unSelectAllChildren(items?: any[]): void {
+    public unSelectAllChildren(items?: Item[]): void {
         if (!items) {
             items = this.parentItem.children;
         }

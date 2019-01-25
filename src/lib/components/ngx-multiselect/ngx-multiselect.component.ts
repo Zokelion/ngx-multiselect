@@ -5,7 +5,7 @@ import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { MultiSelectService } from '../../services/multi-select.service';
 
 @Component({
-    selector: 'app-ngx-multiselect',
+    selector: 'ngx-multiselect',
     templateUrl: './ngx-multiselect.component.html',
     styleUrls: ['./ngx-multiselect.component.scss']
 })

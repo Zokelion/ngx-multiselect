@@ -18,14 +18,14 @@
             </label>
         </div>
         <ng-container *ngIf="parentItem.children.length > 0">
-            <app-ngx-multiselect-children
+            <ngx-multiselect-children
                 *ngFor="let item of parentItem.children"
                 [filter]="filter"
                 [isFirstLevel]="false"
                 (itemSelected)="childSelected($event)"
                 [includeContainer]="includeContainer"
                 [parentItem]="item"
-            ></app-ngx-multiselect-children>
+            ></ngx-multiselect-children>
         </ng-container>
     </li>
 </ul>

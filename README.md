@@ -29,14 +29,14 @@ NgxMultiselect generate a tree based on an list of items.
 the component should be declared in your html code like this :
 
 ```html
-<app-ngx-multiselect
+<ngx-multiselect
     (itemSelected)="getSelectedItem($event)"
     [items]="items"
     [selectAllButtonLabel]="'Select All'"
     [unSelectAllButtonLabel]="'Unselect All'"
     [defaultToggleButtonLabel]="'No Items Selected'"
     [placeholder]="'Search Items'"
-></app-ngx-multiselect>
+></ngx-multiselect>
 ```
 
 This is a simple interface that describes any parameters for a multiSelect component.
@@ -192,10 +192,10 @@ Labels can be customized depending on your language. We're using English by defa
 The labels of this components have default value but the following params can be customize :
 
 ```html
-<app-ngx-multiselect
+<ngx-multiselect
     [selectAllButtonLabel]="'Select All'"
     [unSelectAllButtonLabel]="'Unselect All'"
     [defaultToggleButtonLabel]="'No Items Selected'"
     [placeholder]="'Search Items'"
-></app-ngx-multiselect>
+></ngx-multiselect>
 ```

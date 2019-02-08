@@ -38,7 +38,7 @@
     "ngPackage": {
         "lib": {
             "entryFile": "public_api.ts",
-            "flatModuleFile": "ngx-bootstrap-treeview"
+            "flatModuleFile": "ngx-bootstrap-multiselect"
         },
         "dest": "../../dist"
     }

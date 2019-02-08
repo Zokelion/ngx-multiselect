@@ -15,6 +15,9 @@ fa-icon {
     &.open {
         max-height: 100px;
     }
+    position: absolute;
+    background-color: white;
+    z-index: 9;
 }
 
 @include media-breakpoint-up(sm) {

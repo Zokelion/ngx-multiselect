@@ -1,7 +1,7 @@
 {
     "$schema": "../../node_modules/ng-packagr/package.schema.json",
     "name": "@zokelion/ngx-multiselect",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "description": "Angular recursive select tree",
     "repository": {
         "type": "git",
@@ -31,7 +31,7 @@
         "@angular/common": "^6.0.0 || ^7.0.0",
         "@angular/core": "^6.0.0 || ^7.0.0",
         "@angular/platform-browser": "^6.0.0 || ^7.0.0",
-        "@fortawesome/angular-fontawesome": "^0.2.0",
+        "@fortawesome/angular-fontawesome": "^0.2.0 || ^0.3.0",
         "@fortawesome/fontawesome-svg-core": "^1.2.4",
         "@fortawesome/free-solid-svg-icons": "^5.3.1"
     },

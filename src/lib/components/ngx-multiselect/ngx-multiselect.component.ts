@@ -28,6 +28,10 @@ export class NgxMultiselectComponent implements OnInit {
     public defaultToggleButtonLabel = 'No Items Selected';
     @Input()
     public placeholder = 'Search Items';
+    @Input()
+    public toggleBtnClass = 'w-75';
+    @Input()
+    public toggleContentClass = 'w-100';
 
     @Output()
     public itemSelected: EventEmitter<ItemSelectedEvent> = new EventEmitter<ItemSelectedEvent>();

@@ -1,3 +1,16 @@
+button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    span {
+        display: inline-block;
+    }
+    .toggleLabel {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 90%;
+    }
+}
 fa-icon {
     transform: rotate(0);
     transition: 0.5s;
@@ -17,6 +30,11 @@ fa-icon {
     position: absolute;
     background-color: white;
     z-index: 9;
+    button {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: block;
+    }
 }
 
 @media screen and (min-width: 768px) {

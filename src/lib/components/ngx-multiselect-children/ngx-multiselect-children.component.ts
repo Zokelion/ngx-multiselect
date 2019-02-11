@@ -4,6 +4,7 @@ import { Item } from '../../models/item.model';
 import { MultiSelectService } from '../../services/multi-select.service';
 
 @Component({
+    // tslint:disable-next-line:component-selector
     selector: 'ngx-multiselect-children',
     templateUrl: './ngx-multiselect-children.component.html',
     styleUrls: ['./ngx-multiselect-children.component.scss']

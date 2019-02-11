@@ -1,13 +1,18 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ElementRef } from '@angular/core';
 import { ItemSelectedEvent } from '../../models/item-selected-event.model';
 import { Item } from '../../models/item.model';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { MultiSelectService } from '../../services/multi-select.service';
 
 @Component({
+    // tslint:disable-next-line:component-selector
     selector: 'ngx-multiselect',
     templateUrl: './ngx-multiselect.component.html',
-    styleUrls: ['./ngx-multiselect.component.scss']
+    styleUrls: ['./ngx-multiselect.component.scss'],
+    // tslint:disable-next-line:use-host-property-decorator
+    host: {
+        '(document:click)': 'onClick($event)'
+    }
 })
 export class NgxMultiselectComponent implements OnInit {
     // icons
@@ -34,10 +39,9 @@ export class NgxMultiselectComponent implements OnInit {
     public includeContainer: boolean;
     public state = 'closed';
 
-    constructor(private _selectAllItemsService: MultiSelectService) {}
+    constructor(private _selectAllItemsService: MultiSelectService, private _eref: ElementRef) {}
 
     ngOnInit() {
-        this.selectedItems = this.selectedItems.concat(this.items);
         this.setLabel();
     }
 
@@ -60,13 +64,20 @@ export class NgxMultiselectComponent implements OnInit {
             if (!this.selectedItems || !this.selectedItems.length) {
                 this.toggleButtonLabel = this.defaultToggleButtonLabel;
             } else {
-                this.toggleButtonLabel =
-                    this.selectedItems[0].name + ', (' + this.selectedItems.length + ')';
+                this.toggleButtonLabel = this.selectedItems[0].name;
             }
         }, 0);
     }
 
     animateToggle() {
         this.state = this.state === 'closed' ? 'open' : 'closed';
+    }
+
+    onClick(event) {
+        if (!this._eref.nativeElement.contains(event.target)) {
+            if (this.state === 'open') {
+                this.animateToggle();
+            }
+        }
     }
 }

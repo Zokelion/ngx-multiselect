@@ -208,13 +208,13 @@ export class NgxMultiselectChildrenComponent implements OnInit, OnChanges {
             }
         }, 0);
     }
-    private _countChildren(item?: any): number {
+    private _countChildren(item?: Item): number {
         let acc = 0;
         if (!item) {
             item = this.parentItem;
         }
         if (item.children.length) {
-            item.children.forEach((child: any) => {
+            item.children.forEach((child: Item) => {
                 acc += this._countChildren(child);
             });
             if (this.includeContainer) {

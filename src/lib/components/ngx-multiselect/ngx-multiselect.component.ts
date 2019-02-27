@@ -54,7 +54,13 @@ export class NgxMultiselectComponent implements OnInit {
     }
 
     public childSelected(eventItem: ItemSelectedEvent): void {
-        this.selectedItems = eventItem.selectedItems;
+        if (eventItem.item.isSelected && this.selectedItems.indexOf(eventItem.item) === -1) {
+            this.selectedItems.push(eventItem.item);
+            eventItem.selectedItems = this.selectedItems;
+        } else if (!eventItem.item.isSelected) {
+            this.selectedItems.splice(this.selectedItems.indexOf(eventItem.item), 1);
+            eventItem.selectedItems = this.selectedItems;
+        }
         this.setLabel();
         this.itemSelected.emit(eventItem);
     }

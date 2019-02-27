@@ -11,19 +11,6 @@
         [enableAnimation]="true"
     ></ngx-multiselect>
 </div>
-<div class="col-3">
-    <ngx-multiselect
-        (itemSelected)="childSelected2($event)"
-        [items]="paramItems2"
-        [selectAllButtonLabel]="'Select All'"
-        [unSelectAllButtonLabel]="'Unselect All'"
-        [defaultToggleButtonLabel]="'No Items Selected'"
-        [placeholder]="'Search Items'"
-        [toggleBtnClass]="'btn-primary w-75'"
-        [toggleContentClass]="'w-100'"
-        [enableAnimation]="true"
-    ></ngx-multiselect>
-</div>
 <div class="row">
     <div class="col-12">
         <h4>Selected Items :</h4>
@@ -37,23 +24,6 @@
             </thead>
             <tbody>
                 <tr *ngFor="let item of selectedItems">
-                    <th>{{ item.id }}</th>
-                    <td>{{ item.name }}</td>
-                    <td>{{ item.children.length }}</td>
-                </tr>
-            </tbody>
-        </table>
-        <h4>Selected Items 2:</h4>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Number Of Children</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of selectedItems2">
                     <th>{{ item.id }}</th>
                     <td>{{ item.name }}</td>
                     <td>{{ item.children.length }}</td>

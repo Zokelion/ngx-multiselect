@@ -24,9 +24,12 @@ fa-icon {
     max-height: 0px;
     list-style-type: none;
     overflow: auto;
-    transition: max-height 0.5s ease-out;
+    &.enableAnimation {
+        transition: max-height 0.5s ease-out;
+    }
     &.open {
         max-height: 100px;
+        border: solid 1px black;
     }
     position: absolute;
     background-color: white;

@@ -36,8 +36,9 @@ the component should be declared in your html code like this :
     [unSelectAllButtonLabel]="'Unselect All'"
     [defaultToggleButtonLabel]="'No Items Selected'"
     [placeholder]="'Search Items'"
-    [toggleBtnClass]="'w-75'"
+    [toggleBtnClass]="'btn-primary w-75'"
     [toggleContentClass]="'w-100'"
+    [enableAnimation]="true"
 ></ngx-multiselect>
 ```
 
@@ -51,8 +52,9 @@ This is a simple interface that describes any parameters for a multiSelect compo
 | unSelectAllButtonLabel   | string            |    ❌    | button label for unselect all items                                                                                                         | 'Unselect All'      |
 | defaultToggleButtonLabel | string            |    ❌    | label of toggle button in case of none items are selected                                                                                   | 'No Items Selected' |
 | placeholder              | string            |    ❌    | placeholder of research input                                                                                                               | 'Search Items'      |
-| toggleBtnClass           | string            |    ❌    | input for your custom css classes on the toggle button                                                                                      | 'w-75'              |
+| toggleBtnClass           | string            |    ❌    | input for your custom css classes on the toggle button                                                                                      | 'btn-primary w-75'  |
 | toggleContentClass       | string            |    ❌    | input for your custom css classes on the content of the toggle                                                                              | 'w-100'             |
+| enableAnimation          | boolean           |    ❌    | enable or not the animation of the toggle content                                                                                           | true                |
 
 In order to use the event class import it in your component and declare a new function in your component like this :
 
@@ -201,7 +203,8 @@ The labels of this components have default value but the following params can be
     [unSelectAllButtonLabel]="'Unselect All'"
     [defaultToggleButtonLabel]="'No Items Selected'"
     [placeholder]="'Search Items'"
-    [toggleBtnClass]="'w-75'"
+    [toggleBtnClass]="'btn-primary w-75'"
     [toggleContentClass]="'w-100'"
+    [enableAnimation]="true"
 ></ngx-multiselect>
 ```

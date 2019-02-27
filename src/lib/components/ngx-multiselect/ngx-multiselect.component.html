@@ -1,16 +1,16 @@
-<button type="button" class="btn btn-primary {{ toggleBtnClass }}" (click)="animateToggle()">
-    <span class="toggleLabel">{{ toggleButtonLabel }}</span
-    ><span>,({{ selectedItems.length }})</span>
+<button type="button" class="btn {{ toggleBtnClass }}" (click)="animateToggle()">
     <fa-icon
         [icon]="faCaretRight"
-        class="d-inline-block"
+        class="d-inline-block mr-2"
         [ngClass]="{ open: state === 'open' }"
     ></fa-icon>
+    <span class="toggleLabel">{{ toggleButtonLabel }}</span
+    ><span *ngIf="selectedItems.length > 0">,({{ selectedItems.length }})</span>
 </button>
 
 <ul
     class="toggle-content list-group {{ toggleContentClass }}"
-    [ngClass]="{ open: state === 'open' }"
+    [ngClass]="{ open: state === 'open', enableAnimation: enableAnimation }"
 >
     <li class="px-3 py-0">
         <div class="row">
@@ -24,12 +24,14 @@
                 />
             </div>
             <div class="col-6">
-                <button class="btn btn-default w-100" (click)="selectAllItems()">
+                <button class="btn btn-secondary w-100" (click)="selectAllItems()">
+                    <fa-icon [icon]="faCheck" class="d-inline-block"></fa-icon>
                     {{ selectAllButtonLabel }}
                 </button>
             </div>
             <div class="col-6">
-                <button class="btn btn-default w-100" (click)="unSelectAllItems()">
+                <button class="btn btn-secondary w-100" (click)="unSelectAllItems()">
+                    <fa-icon [icon]="faTimes" class="d-inline-block"></fa-icon>
                     {{ unSelectAllButtonLabel }}
                 </button>
             </div>

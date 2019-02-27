@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input, ElementRef } from '@angular/core';
 import { ItemSelectedEvent } from '../../models/item-selected-event.model';
 import { Item } from '../../models/item.model';
-import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import { faCaretRight, faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { MultiSelectService } from '../../services/multi-select.service';
 
 @Component({
@@ -17,6 +17,8 @@ import { MultiSelectService } from '../../services/multi-select.service';
 export class NgxMultiselectComponent implements OnInit {
     // icons
     public faCaretRight = faCaretRight;
+    public faCheck = faCheck;
+    public faTimes = faTimes;
 
     @Input()
     public items: Item[] = [];
@@ -29,9 +31,11 @@ export class NgxMultiselectComponent implements OnInit {
     @Input()
     public placeholder = 'Search Items';
     @Input()
-    public toggleBtnClass = 'w-75';
+    public toggleBtnClass = 'btn-primary w-75';
     @Input()
     public toggleContentClass = 'w-100';
+    @Input()
+    public enableAnimation = true;
 
     @Output()
     public itemSelected: EventEmitter<ItemSelectedEvent> = new EventEmitter<ItemSelectedEvent>();

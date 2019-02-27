@@ -5,7 +5,7 @@
         [ngClass]="{ open: state === 'open' }"
     ></fa-icon>
     <span class="toggleLabel">{{ toggleButtonLabel }}</span
-    ><span *ngIf="selectedItems.length > 0">,({{ selectedItems.length }})</span>
+    ><span *ngIf="selectedItems.length > 1">,({{ selectedItems.length }})</span>
 </button>
 
 <ul

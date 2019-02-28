@@ -12,7 +12,8 @@ import { MultiSelectService } from '../../services/multi-select.service';
     // tslint:disable-next-line:use-host-property-decorator
     host: {
         '(document:click)': 'onClick($event)'
-    }
+    },
+    providers: [MultiSelectService]
 })
 export class NgxMultiselectComponent implements OnInit {
     // icons
@@ -57,7 +58,10 @@ export class NgxMultiselectComponent implements OnInit {
         if (eventItem.item.isSelected && this.selectedItems.indexOf(eventItem.item) === -1) {
             this.selectedItems.push(eventItem.item);
             eventItem.selectedItems = this.selectedItems;
-        } else if (!eventItem.item.isSelected) {
+        } else if (
+            !eventItem.item.isSelected &&
+            this.selectedItems.indexOf(eventItem.item) !== -1
+        ) {
             this.selectedItems.splice(this.selectedItems.indexOf(eventItem.item), 1);
             eventItem.selectedItems = this.selectedItems;
         }

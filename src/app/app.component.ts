@@ -42,7 +42,7 @@ export class AppComponent implements OnInit {
                                 {
                                     id: 15,
                                     name: 'Washington',
-                                    isSelected: false,
+                                    isSelected: true,
                                     children: []
                                 }
                             ]
@@ -50,7 +50,7 @@ export class AppComponent implements OnInit {
                         {
                             id: 5,
                             name: 'Mexico',
-                            isSelected: false,
+                            isSelected: true,
                             children: []
                         }
                     ]
@@ -82,7 +82,7 @@ export class AppComponent implements OnInit {
                         {
                             id: 10,
                             name: 'China',
-                            isSelected: true,
+                            isSelected: false,
                             children: []
                         },
                         {
@@ -96,12 +96,12 @@ export class AppComponent implements OnInit {
                 {
                     id: 12,
                     name: 'Oceania',
-                    isSelected: true,
+                    isSelected: false,
                     children: [
                         {
                             id: 13,
                             name: 'Australia',
-                            isSelected: false,
+                            isSelected: true,
                             children: []
                         }
                     ]
@@ -109,6 +109,7 @@ export class AppComponent implements OnInit {
             ]
         });
     }
+
     public childSelected(eventItem: ItemSelectedEvent): void {
         this.selectedItems = eventItem.selectedItems;
     }

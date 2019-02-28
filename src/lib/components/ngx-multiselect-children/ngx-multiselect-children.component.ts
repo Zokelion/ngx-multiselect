@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { ItemSelectedEvent } from '../../models/item-selected-event.model';
 import { Item } from '../../models/item.model';
-import { MultiSelectService } from '../../services/multi-select.service';
+import { MultiSelectService } from 'src/lib/services/multi-select.service';
 
 @Component({
     // tslint:disable-next-line:component-selector

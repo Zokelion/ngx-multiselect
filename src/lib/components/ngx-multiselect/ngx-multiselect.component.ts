@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter, Input, ElementRef } from '@ang
 import { ItemSelectedEvent } from '../../models/item-selected-event.model';
 import { Item } from '../../models/item.model';
 import { faCaretRight, faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
-import { MultiSelectService } from 'src/lib/services/multi-select.service';
+import { MultiSelectService } from '../../services/multi-select.service';
 
 @Component({
     // tslint:disable-next-line:component-selector

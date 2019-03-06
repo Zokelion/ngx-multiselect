@@ -1,4 +1,4 @@
 export class ItemSelectedEvent {
-    item: any;
-    selectedItems: any;
+    item: Item;
+    selectedItems: Item[];
 }

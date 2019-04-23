@@ -1,6 +1,6 @@
 <ul *ngIf="isVisible" class="no-style-list px-3">
     <!-- [ngClass]="{ 'p-0': isFirstLevel, 'px-3': !isFirstLevel }" -->
-    <li role="menuitem">
+    <li role="menuitem" class="pointer">
         <div
             [ngClass]="{
                 'font-weight-bold': parentItem.children.length > 0,

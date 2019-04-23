@@ -1,4 +1,4 @@
-<button type="button" class="btn {{ toggleBtnClass }}" (click)="animateToggle()">
+<button type="button" class="btn {{ toggleBtnClass }}" (click)="animateToggle()" [disabled]="disabled">
     <fa-icon
         [icon]="faCaretRight"
         class="d-inline-block mr-2"

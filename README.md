@@ -42,6 +42,7 @@ the component should be declared in your html code like this :
     [useClassicCheckbox]="false"
     [enableResearch]="true"
     [disabled]="false"
+    [itemClass]="''"
 ></ngx-multiselect>
 ```
 
@@ -57,6 +58,7 @@ This is a simple interface that describes any parameters for a multiSelect compo
 | placeholder              | string            |    ❌    | placeholder of research input                                                                                                               | 'Search Items'      |
 | toggleBtnClass           | string            |    ❌    | input for your custom css classes on the toggle button                                                                                      | 'btn-primary w-75'  |
 | toggleContentClass       | string            |    ❌    | input for your custom css classes on the content of the toggle                                                                              | 'w-100'             |
+| itemClass                 | string           |    ❌    | input for your custom css classes on the items li                                                                                           | ''                  |
 | enableAnimation          | boolean           |    ❌    | enable or not the animation of the toggle content                                                                                           | true                |
 | useClassicCheckbox       | boolean           |    ❌    | use simple font-awesome icon instead of animate checkbox                                                                                    | false               |
 | enableResearch           | boolean           |    ❌    | display the research input                                                                                                                  | false               |
@@ -215,5 +217,6 @@ The labels of this components have default value but the following params can be
     [useClassicCheckbox]="false"
     [enableResearch]="true"
     [disabled]="false"
+    [itemClass]="''"
 ></ngx-multiselect>
 ```

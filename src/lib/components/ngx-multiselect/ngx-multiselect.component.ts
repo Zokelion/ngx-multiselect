@@ -36,6 +36,8 @@ export class NgxMultiselectComponent implements OnInit {
     @Input()
     public toggleContentClass = 'w-100';
     @Input()
+    public itemClass = '';
+    @Input()
     public enableAnimation = true;
     @Input()
     public useClassicCheckbox = false;

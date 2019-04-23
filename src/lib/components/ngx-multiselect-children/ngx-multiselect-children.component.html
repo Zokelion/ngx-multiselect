@@ -1,6 +1,6 @@
 <ul *ngIf="isVisible" class="no-style-list px-3">
     <!-- [ngClass]="{ 'p-0': isFirstLevel, 'px-3': !isFirstLevel }" -->
-    <li role="menuitem" class="pointer">
+    <li role="menuitem" class="pointer {{itemClass}}">
         <div *ngIf="!useClassicCheckbox"
             [ngClass]="{
                 'font-weight-bold': parentItem.children.length > 0,
@@ -38,6 +38,7 @@
                 [includeContainer]="includeContainer"
                 [parentItem]="item"
                 [useClassicCheckbox]="useClassicCheckbox"
+                [itemClass]="itemClass"
             ></ngx-multiselect-children>
         </ng-container>
     </li>

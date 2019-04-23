@@ -21,6 +21,8 @@ export class NgxMultiselectChildrenComponent implements OnInit, OnChanges {
     parentItem: Item;
     @Input()
     useClassicCheckbox = false;
+    @Input()
+    public itemClass = '';
 
     //icon
     public faCheck = faCheck;
@@ -36,6 +38,7 @@ export class NgxMultiselectChildrenComponent implements OnInit, OnChanges {
     constructor(private _selectAllItemsService: MultiSelectService) {}
 
     ngOnInit() {
+        console.log(this.itemClass);
         this.setSelectedItems();
         this._selectAllItemsService.selectAll.subscribe(() => {
             this.selectItem();

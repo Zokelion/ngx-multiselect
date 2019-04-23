@@ -111,6 +111,7 @@ export class AppComponent implements OnInit {
     }
 
     public childSelected(eventItem: ItemSelectedEvent): void {
+        console.log(eventItem);
         this.selectedItems = eventItem.selectedItems;
     }
 }

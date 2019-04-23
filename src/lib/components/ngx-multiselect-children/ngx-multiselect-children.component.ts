@@ -38,7 +38,6 @@ export class NgxMultiselectChildrenComponent implements OnInit, OnChanges {
     constructor(private _selectAllItemsService: MultiSelectService) {}
 
     ngOnInit() {
-        console.log(this.itemClass);
         this.setSelectedItems();
         this._selectAllItemsService.selectAll.subscribe(() => {
             this.selectItem();
@@ -54,12 +53,14 @@ export class NgxMultiselectChildrenComponent implements OnInit, OnChanges {
 
     public unSelectItem(): void {
         if (this.parentItem.children.length === 0) {
-            this.parentItem.isSelected = false;
-            this.selectedItems.splice(this.selectedItems.indexOf(this.parentItem), 1);
-            this.itemSelected.emit({
-                item: this.parentItem,
-                selectedItems: this.selectedItems
-            });
+            if(this.parentItem.isSelected){
+                this.parentItem.isSelected = false;
+                this.selectedItems.splice(this.selectedItems.indexOf(this.parentItem), 1);
+                this.itemSelected.emit({
+                    item: this.parentItem,
+                    selectedItems: this.selectedItems
+                });
+            }
         } else {
             // Here we have childrens and an unselected parent
             // we check if parent must be include in the list and remove all childrens of the branch
@@ -174,16 +175,19 @@ export class NgxMultiselectChildrenComponent implements OnInit, OnChanges {
             items = this.parentItem.children;
         }
         items.forEach(item => {
-            item.isSelected = false;
             if (item.children.length > 0) {
                 this.unSelectAllChildren(item.children);
-                if (this.includeContainer) {
+                if(item.isSelected){
+                    item.isSelected = false;
                     this.selectedItems.splice(this.selectedItems.indexOf(item), 1);
                     this.itemSelected.emit({ item, selectedItems: this.selectedItems });
                 }
             } else {
-                this.selectedItems.splice(this.selectedItems.indexOf(item), 1);
-                this.itemSelected.emit({ item, selectedItems: this.selectedItems });
+                if(item.isSelected){
+                    item.isSelected = false;
+                    this.selectedItems.splice(this.selectedItems.indexOf(item), 1);
+                    this.itemSelected.emit({ item, selectedItems: this.selectedItems });
+                }
             }
         });
     }

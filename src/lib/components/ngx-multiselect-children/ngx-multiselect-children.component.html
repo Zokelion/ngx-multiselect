@@ -1,7 +1,7 @@
 <ul *ngIf="isVisible" class="no-style-list px-3">
     <!-- [ngClass]="{ 'p-0': isFirstLevel, 'px-3': !isFirstLevel }" -->
     <li role="menuitem" class="pointer">
-        <div
+        <div *ngIf="!useClassicCheckbox"
             [ngClass]="{
                 'font-weight-bold': parentItem.children.length > 0,
                 'font-italic': parentItem.isSelected,
@@ -16,7 +16,19 @@
                 />
                 <span class="check-box"></span> {{ parentItem.name }}
             </label>
+            
         </div>
+        <div *ngIf="useClassicCheckbox"
+        [ngClass]="{
+            'font-weight-bold': parentItem.children.length > 0,
+            'font-italic': parentItem.isSelected,
+            'text-muted': parentItem.isSelected
+        }"
+        (click)="itemClicked()"
+    >
+        <fa-icon *ngIf="parentItem.isSelected" [icon]="faCheck" class="d-inline-block"></fa-icon>
+        {{ parentItem.name }}
+    </div>
         <ng-container *ngIf="parentItem.children.length > 0">
             <ngx-multiselect-children
                 *ngFor="let item of parentItem.children"
@@ -25,6 +37,7 @@
                 (itemSelected)="childSelected($event)"
                 [includeContainer]="includeContainer"
                 [parentItem]="item"
+                [useClassicCheckbox]="useClassicCheckbox"
             ></ngx-multiselect-children>
         </ng-container>
     </li>

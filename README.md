@@ -39,6 +39,7 @@ the component should be declared in your html code like this :
     [toggleBtnClass]="'btn-primary w-75'"
     [toggleContentClass]="'w-100'"
     [enableAnimation]="true"
+    [useClassicCheckbox]="false"
 ></ngx-multiselect>
 ```
 
@@ -55,6 +56,7 @@ This is a simple interface that describes any parameters for a multiSelect compo
 | toggleBtnClass           | string            |    ❌    | input for your custom css classes on the toggle button                                                                                      | 'btn-primary w-75'  |
 | toggleContentClass       | string            |    ❌    | input for your custom css classes on the content of the toggle                                                                              | 'w-100'             |
 | enableAnimation          | boolean           |    ❌    | enable or not the animation of the toggle content                                                                                           | true                |
+| useClassicCheckbox       | boolean           |    ❌    | use simple font-awesome icon instead of animate checkbox                                                                                    | false               |
 
 In order to use the event class import it in your component and declare a new function in your component like this :
 
@@ -206,5 +208,6 @@ The labels of this components have default value but the following params can be
     [toggleBtnClass]="'btn-primary w-75'"
     [toggleContentClass]="'w-100'"
     [enableAnimation]="true"
+    [useClassicCheckbox]="false"
 ></ngx-multiselect>
 ```

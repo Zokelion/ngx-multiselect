@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angu
 import { ItemSelectedEvent } from '../../models/item-selected-event.model';
 import { Item } from '../../models/item.model';
 import { MultiSelectService } from '../../services/multi-select.service';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     // tslint:disable-next-line:component-selector
@@ -18,6 +19,11 @@ export class NgxMultiselectChildrenComponent implements OnInit, OnChanges {
     includeContainer: boolean;
     @Input()
     parentItem: Item;
+    @Input()
+    useClassicCheckbox = false;
+
+    //icon
+    public faCheck = faCheck;
 
     isVisible = true;
     selectedItems: Item[] = [];

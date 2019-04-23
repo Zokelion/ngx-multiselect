@@ -39,6 +39,8 @@ export class NgxMultiselectComponent implements OnInit {
     public enableAnimation = true;
     @Input()
     public useClassicCheckbox = false;
+    @Input()
+    public enableResearch = true;
 
     @Output()
     public itemSelected: EventEmitter<ItemSelectedEvent> = new EventEmitter<ItemSelectedEvent>();

@@ -14,22 +14,22 @@
 >
     <li class="px-3 py-0">
         <div class="row">
-            <div class="col-12">
+            <div *ngIf="enableResearch" class="col-12">
                 <input
                     name="name"
                     type="text"
                     [(ngModel)]="filter.name"
                     placeholder="{{ placeholder }}"
-                    class="form-control mt-2 mb-2"
+                    class="form-control mt-2"
                 />
             </div>
-            <div class="col-6">
+            <div class="col-6 mt-2">
                 <button class="btn btn-secondary w-100" (click)="selectAllItems()">
                     <fa-icon [icon]="faCheck" class="d-inline-block"></fa-icon>
                     {{ selectAllButtonLabel }}
                 </button>
             </div>
-            <div class="col-6">
+            <div class="col-6 mt-2">
                 <button class="btn btn-secondary w-100" (click)="unSelectAllItems()">
                     <fa-icon [icon]="faTimes" class="d-inline-block"></fa-icon>
                     {{ unSelectAllButtonLabel }}

@@ -1,5 +1,5 @@
 export class Item {
-    id?: number;
+    id?: number | string;
     name: string;
     isSelected: boolean;
     children: Item[];

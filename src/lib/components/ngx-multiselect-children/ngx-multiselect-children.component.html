@@ -8,7 +8,7 @@
                 'text-muted': parentItem.isSelected
             }"
         >
-            <label>
+            <label class="m-0">
                 <input
                     type="checkbox"
                     [(ngModel)]="parentItem.isSelected"
@@ -19,6 +19,7 @@
             
         </div>
         <div *ngIf="useClassicCheckbox"
+        class="m-0"
         [ngClass]="{
             'font-weight-bold': parentItem.children.length > 0,
             'font-italic': parentItem.isSelected,

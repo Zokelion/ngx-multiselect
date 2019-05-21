@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ItemSelectedEvent } from 'src/lib/models/item-selected-event.model';
+import { ItemClickedEvent } from 'src/lib/models/item-clicked-event.model';
 import { Item } from 'src/lib/models/item.model';
 @Component({
     selector: 'app-root',
@@ -26,7 +26,9 @@ export class AppComponent implements OnInit {
                             id: 3,
                             name: 'Canada',
                             isSelected: false,
-                            children: []
+                            children: [],
+                            cssClasses: 'bg-primary text-light',
+                            cssSelectedClasse: 'bg-primary text-light'
                         },
                         {
                             id: 4,
@@ -37,23 +39,33 @@ export class AppComponent implements OnInit {
                                     id: 14,
                                     name: 'Arizona',
                                     isSelected: false,
-                                    children: []
+                                    children: [],
+                                    cssClasses: 'bg-primary text-light',
+                                    cssSelectedClasse: 'bg-primary text-light'
                                 },
                                 {
                                     id: 15,
                                     name: 'Washington',
                                     isSelected: true,
-                                    children: []
+                                    children: [],
+                                    cssClasses: 'bg-primary text-light',
+                                    cssSelectedClasse: 'bg-primary text-light'
                                 }
-                            ]
+                            ],
+                            cssClasses: 'bg-primary text-light',
+                            cssSelectedClasse: 'bg-primary text-light'
                         },
                         {
                             id: 5,
                             name: 'Mexico',
                             isSelected: true,
-                            children: []
+                            children: [],
+                            cssClasses: 'bg-primary text-light',
+                            cssSelectedClasse: 'bg-primary text-light'
                         }
-                    ]
+                    ],
+                    cssClasses: 'bg-primary text-light',
+                    cssSelectedClasse: 'bg-primary text-light'
                 },
                 {
                     id: 6,
@@ -64,15 +76,21 @@ export class AppComponent implements OnInit {
                             id: 7,
                             name: 'France',
                             isSelected: true,
-                            children: []
+                            children: [],
+                            cssClasses: 'bg-primary text-light',
+                            cssSelectedClasse: 'bg-primary text-light'
                         },
                         {
                             id: 8,
                             name: 'Deutschland',
                             isSelected: true,
-                            children: []
+                            children: [],
+                            cssClasses: 'bg-primary text-light',
+                            cssSelectedClasse: 'bg-primary text-light'
                         }
-                    ]
+                    ],
+                    cssClasses: 'bg-primary text-light',
+                    cssSelectedClasse: 'bg-primary text-light'
                 },
                 {
                     id: 9,
@@ -83,15 +101,21 @@ export class AppComponent implements OnInit {
                             id: 10,
                             name: 'China',
                             isSelected: false,
-                            children: []
+                            children: [],
+                            cssClasses: 'bg-primary text-light',
+                            cssSelectedClasse: 'bg-primary text-light'
                         },
                         {
                             id: 11,
                             name: 'Japan',
                             isSelected: true,
-                            children: []
+                            children: [],
+                            cssClasses: 'bg-primary text-light',
+                            cssSelectedClasse: 'bg-primary text-light'
                         }
-                    ]
+                    ],
+                    cssClasses: 'bg-primary text-light',
+                    cssSelectedClasse: 'bg-primary text-light'
                 },
                 {
                     id: 12,
@@ -102,15 +126,21 @@ export class AppComponent implements OnInit {
                             id: 13,
                             name: 'Australia',
                             isSelected: true,
-                            children: []
+                            children: [],
+                            cssClasses: 'bg-primary text-light',
+                            cssSelectedClasse: 'bg-primary text-light'
                         }
-                    ]
+                    ],
+                    cssClasses: 'bg-primary text-light',
+                    cssSelectedClasse: 'bg-primary text-light'
                 }
-            ]
+            ],
+            cssClasses: 'bg-primary text-light',
+            cssSelectedClasse: 'bg-primary text-light'
         });
     }
 
-    public childSelected(eventItem: ItemSelectedEvent): void {
+    public childSelected(eventItem: ItemClickedEvent): void {
         console.log(eventItem);
         this.selectedItems = eventItem.selectedItems;
     }

@@ -1,8 +1,18 @@
-.pointer{
+.pointer {
     cursor: pointer;
 }
 .no-style-list {
     list-style-type: none;
+}
+.d-none {
+    display: none;
+}
+.d-block {
+    display: block;
+}
+.px-0 {
+    padding-left: 0;
+    padding-right: 0;
 }
 /*Animated check box designe made by Jimmy Gillam and refactored using sass by myself*/
 @keyframes dothabottomcheck {

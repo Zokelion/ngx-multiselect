@@ -1,8 +1,18 @@
-import { Component, OnInit, Output, EventEmitter, Input, ElementRef } from '@angular/core';
-import { ItemSelectedEvent } from '../../models/item-selected-event.model';
+import {
+    Component,
+    OnInit,
+    Output,
+    EventEmitter,
+    Input,
+    ElementRef,
+    ViewChildren,
+    QueryList
+} from '@angular/core';
+import { ItemClickedEvent } from '../../models/item-clicked-event.model';
 import { Item } from '../../models/item.model';
 import { faCaretRight, faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { MultiSelectService } from '../../services/multi-select.service';
+import { NgxMultiselectChildrenComponent } from '../ngx-multiselect-children/ngx-multiselect-children.component';
 
 @Component({
     // tslint:disable-next-line:component-selector
@@ -26,7 +36,7 @@ export class NgxMultiselectComponent implements OnInit {
     @Input()
     public selectAllButtonLabel = 'Select All';
     @Input()
-    public unSelectAllButtonLabel = 'Unselect All';
+    public unselectAllButtonLabel = 'Unselect All';
     @Input()
     public defaultToggleButtonLabel = 'No Items Selected';
     @Input()
@@ -47,7 +57,10 @@ export class NgxMultiselectComponent implements OnInit {
     public disabled = false;
 
     @Output()
-    public itemSelected: EventEmitter<ItemSelectedEvent> = new EventEmitter<ItemSelectedEvent>();
+    public itemSelected: EventEmitter<ItemClickedEvent> = new EventEmitter<ItemClickedEvent>();
+
+    @ViewChildren(NgxMultiselectChildrenComponent)
+    children: QueryList<NgxMultiselectChildrenComponent>;
 
     public selectedItems: Item[] = [];
     public filter: any = { id: null, name: '', isSelected: false };
@@ -62,7 +75,7 @@ export class NgxMultiselectComponent implements OnInit {
         this.setLabel();
     }
 
-    public childSelected(eventItem: ItemSelectedEvent): void {
+    public childSelected(eventItem: ItemClickedEvent): void {
         if (eventItem.item.isSelected && this.selectedItems.indexOf(eventItem.item) === -1) {
             this.selectedItems.push(eventItem.item);
             eventItem.selectedItems = this.selectedItems;
@@ -78,11 +91,15 @@ export class NgxMultiselectComponent implements OnInit {
     }
 
     public selectAllItems(): void {
-        this._selectAllItemsService.onSelectAll();
+        this.children.forEach((child: NgxMultiselectChildrenComponent) => {
+            child.select();
+        });
     }
 
-    public unSelectAllItems(): void {
-        this._selectAllItemsService.onUnSelectAll();
+    public unselectAllItems(): void {
+        this.children.forEach((child: NgxMultiselectChildrenComponent) => {
+            child.unselect();
+        });
     }
 
     public setLabel(): void {

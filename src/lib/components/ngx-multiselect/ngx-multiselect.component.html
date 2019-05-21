@@ -1,4 +1,9 @@
-<button type="button" class="btn {{ toggleBtnClass }}" (click)="animateToggle()" [disabled]="disabled">
+<button
+    type="button"
+    class="btn {{ toggleBtnClass }}"
+    (click)="animateToggle()"
+    [disabled]="disabled"
+>
     <fa-icon
         [icon]="faCaretRight"
         class="d-inline-block mr-2"
@@ -8,52 +13,51 @@
     ><span *ngIf="selectedItems.length > 1">,({{ selectedItems.length }})</span>
 </button>
 
-<ul
-    class="toggle-content list-group {{ toggleContentClass }}"
+<div
+    class="toggle-content list-group {{ toggleContentClass }} px-3 py-0"
     [ngClass]="{ open: state === 'open', enableAnimation: enableAnimation }"
 >
-    <li class="px-3 py-0">
-        <div class="row">
-            <div *ngIf="enableResearch" class="col-12">
-                <input
-                    name="name"
-                    type="text"
-                    [(ngModel)]="filter.name"
-                    placeholder="{{ placeholder }}"
-                    class="form-control mt-2"
-                />
-            </div>
-            <div class="col-6 mt-2">
-                <button class="btn btn-secondary w-100" (click)="selectAllItems()">
-                    <fa-icon [icon]="faCheck" class="d-inline-block"></fa-icon>
-                    {{ selectAllButtonLabel }}
-                </button>
-            </div>
-            <div class="col-6 mt-2">
-                <button class="btn btn-secondary w-100" (click)="unSelectAllItems()">
-                    <fa-icon [icon]="faTimes" class="d-inline-block"></fa-icon>
-                    {{ unSelectAllButtonLabel }}
-                </button>
-            </div>
-            <div class="col-12" *ngIf="false">
-                <input
-                    type="checkbox"
-                    [checked]="includeContainer"
-                    (change)="includeContainer = !includeContainer"
-                />
-                Include container in list
-            </div>
-            <div class="divider dropdown-divider col-12"></div>
+    <div class="row">
+        <div *ngIf="enableResearch" class="col-12">
+            <input
+                name="name"
+                type="text"
+                [(ngModel)]="filter.name"
+                placeholder="{{ placeholder }}"
+                class="form-control mt-2"
+            />
         </div>
-    </li>
+        <div class="col-6 mt-2">
+            <button class="btn btn-secondary w-100" (click)="selectAllItems()">
+                <fa-icon [icon]="faCheck" class="d-inline-block"></fa-icon>
+                {{ selectAllButtonLabel }}
+            </button>
+        </div>
+        <div class="col-6 mt-2">
+            <button class="btn btn-secondary w-100" (click)="unselectAllItems()">
+                <fa-icon [icon]="faTimes" class="d-inline-block"></fa-icon>
+                {{ unselectAllButtonLabel }}
+            </button>
+        </div>
+        <div class="col-12" *ngIf="false">
+            <input
+                type="checkbox"
+                [checked]="includeContainer"
+                (change)="includeContainer = !includeContainer"
+            />
+            Include container in list
+        </div>
+        <div class="divider dropdown-divider col-12"></div>
+    </div>
     <ngx-multiselect-children
         *ngFor="let item of items"
         [filter]="filter.name"
         [isFirstLevel]="true"
         (itemSelected)="childSelected($event)"
         [includeContainer]="includeContainer"
-        [parentItem]="item"
+        [item]="item"
         [useClassicCheckbox]="useClassicCheckbox"
         [itemClass]="itemClass"
+        [depth]="0"
     ></ngx-multiselect-children>
-</ul>
+</div>

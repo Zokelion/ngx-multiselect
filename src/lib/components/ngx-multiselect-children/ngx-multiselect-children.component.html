@@ -1,46 +1,47 @@
-<ul *ngIf="isVisible" class="no-style-list px-3">
-    <!-- [ngClass]="{ 'p-0': isFirstLevel, 'px-3': !isFirstLevel }" -->
-    <li role="menuitem" class="pointer {{itemClass}}">
-        <div *ngIf="!useClassicCheckbox"
+<ul class="no-style-list mt-1" [ngClass]="{ 'pl-0': isFirstLevel, 'pl-3': !isFirstLevel }">
+    <li
+        #element
+        role="menuitem"
+        class="pointer {{ itemClass }}"
+        [ngClass]="selectedCssClass"
+        (click)="onItemClicked()"
+    >
+        <div
+            *ngIf="!useClassicCheckbox"
             [ngClass]="{
-                'font-weight-bold': parentItem.children.length > 0,
-                'font-italic': parentItem.isSelected,
-                'text-muted': parentItem.isSelected
+                'font-weight-bold': item.children.length > 0,
+                'font-italic': item.isSelected
             }"
         >
-            <label class="m-0">
-                <input
-                    type="checkbox"
-                    [(ngModel)]="parentItem.isSelected"
-                    (change)="itemClicked()"
-                />
-                <span class="check-box"></span> {{ parentItem.name }}
-            </label>
-            
+            <div class="m-0">
+                <input type="checkbox" [checked]="item.isSelected" />
+                <span class="check-box"></span> {{ item.name }}
+            </div>
         </div>
-        <div *ngIf="useClassicCheckbox"
-        class="m-0"
-        [ngClass]="{
-            'font-weight-bold': parentItem.children.length > 0,
-            'font-italic': parentItem.isSelected,
-            'text-muted': parentItem.isSelected
-        }"
-        (click)="itemClicked()"
-    >
-        <fa-icon *ngIf="parentItem.isSelected" [icon]="faCheck" class="d-inline-block"></fa-icon>
-        {{ parentItem.name }}
-    </div>
-        <ng-container *ngIf="parentItem.children.length > 0">
-            <ngx-multiselect-children
-                *ngFor="let item of parentItem.children"
-                [filter]="filter"
-                [isFirstLevel]="false"
-                (itemSelected)="childSelected($event)"
-                [includeContainer]="includeContainer"
-                [parentItem]="item"
-                [useClassicCheckbox]="useClassicCheckbox"
-                [itemClass]="itemClass"
-            ></ngx-multiselect-children>
-        </ng-container>
+        <div
+            *ngIf="useClassicCheckbox"
+            class="m-0"
+            [ngClass]="{
+                'font-weight-bold': item.children.length > 0,
+                'font-italic': item.isSelected,
+                'text-muted': item.isSelected
+            }"
+        >
+            <fa-icon *ngIf="item.isSelected" [icon]="faCheck" class="d-inline-block"></fa-icon>
+            {{ item.name }}
+        </div>
     </li>
+    <ng-container *ngIf="item.children.length > 0">
+        <ngx-multiselect-children
+            *ngFor="let item of item.children"
+            [filter]="filter"
+            [isFirstLevel]="false"
+            (itemClicked)="onChildItemClicked($event)"
+            [includeContainer]="includeContainer"
+            [item]="item"
+            [useClassicCheckbox]="useClassicCheckbox"
+            [itemClass]="itemClass"
+            [depth]="depth + 1"
+        ></ngx-multiselect-children>
+    </ng-container>
 </ul>

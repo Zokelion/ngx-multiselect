@@ -3,4 +3,6 @@ export class Item {
     name: string;
     isSelected: boolean;
     children: Item[];
+    cssClasses: string;
+    cssSelectedClasse: string;
 }

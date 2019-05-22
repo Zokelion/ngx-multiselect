@@ -98,7 +98,7 @@ Detail of Item property :
 | isSelected         | boolean           |    ✔️    | indicates weither or not this item is ticked.               |
 | children           | item[]            |    ✔️    | childrens of the item                                       |
 | cssClasses         | string            |    ✔️    | css classe(s) to use on your item                           |
-| cssSelectedClasses | item[]            |    ✔️    | css classe(s) to use on your item when it's selected        |
+| cssSelectedClasses | string            |    ✔️    | css classe(s) to use on your item when it's selected        |
 
 Example of items list:
 

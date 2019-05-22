@@ -4,7 +4,7 @@
         role="menuitem"
         class="pointer {{ itemClass }}"
         [ngClass]="selectedCssClass"
-        (click)="onItemClicked()"
+        (click)="onClick()"
     >
         <div
             *ngIf="!useClassicCheckbox"
@@ -31,17 +31,15 @@
             {{ item.name }}
         </div>
     </li>
-    <ng-container *ngIf="item.children.length > 0">
-        <ngx-multiselect-children
-            *ngFor="let item of item.children"
-            [filter]="filter"
-            [isFirstLevel]="false"
-            (itemClicked)="onChildItemClicked($event)"
-            [includeContainer]="includeContainer"
-            [item]="item"
-            [useClassicCheckbox]="useClassicCheckbox"
-            [itemClass]="itemClass"
-            [depth]="depth + 1"
-        ></ngx-multiselect-children>
-    </ng-container>
+    <ngx-multiselect-children
+        *ngFor="let item of item.children"
+        [filter]="filter"
+        [isFirstLevel]="false"
+        (itemClicked)="onChildItemClicked($event)"
+        [includeContainer]="includeContainer"
+        [item]="item"
+        [useClassicCheckbox]="useClassicCheckbox"
+        [itemClass]="itemClass"
+        [depth]="depth + 1"
+    ></ngx-multiselect-children>
 </ul>

@@ -9,7 +9,8 @@ import {
     ViewChild,
     ElementRef,
     ViewChildren,
-    QueryList
+    QueryList,
+    AfterViewInit
 } from '@angular/core';
 import { ItemClickedEvent } from '../../models/item-clicked-event.model';
 import { Item } from '../../models/item.model';
@@ -22,7 +23,7 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
     templateUrl: './ngx-multiselect-children.component.html',
     styleUrls: ['./ngx-multiselect-children.component.scss']
 })
-export class NgxMultiselectChildrenComponent implements OnInit, OnChanges {
+export class NgxMultiselectChildrenComponent implements OnInit, OnChanges, AfterViewInit {
     @Input()
     filter: string;
     @Input()
@@ -49,6 +50,10 @@ export class NgxMultiselectChildrenComponent implements OnInit, OnChanges {
     matchesFilter: boolean;
     public childrenCount: number;
 
+    public isBranch: boolean;
+
+    public isItem: boolean;
+
     @Output()
     public itemClicked: EventEmitter<ItemClickedEvent> = new EventEmitter<ItemClickedEvent>();
 
@@ -58,60 +63,59 @@ export class NgxMultiselectChildrenComponent implements OnInit, OnChanges {
     @ViewChildren(NgxMultiselectChildrenComponent)
     public children: QueryList<NgxMultiselectChildrenComponent>;
 
-    constructor(private _selectAllItemsService: MultiSelectService, private _renderer: Renderer2) {}
+    constructor(private _renderer: Renderer2) {}
 
     ngOnInit() {
-        this._computeClasses();
-        this._selectAllItemsService.selectAll.subscribe(() => {
-            this.select();
-        });
-        this._selectAllItemsService.unSelectAll.subscribe(() => {
-            this.unselect();
-        });
         const marginUnit = -this.depth;
         const paddingUnit = -marginUnit + 1;
         const element = this.element.nativeElement;
         this._renderer.setStyle(element, 'margin-left', marginUnit + 'rem');
         this._renderer.setStyle(element, 'padding-left', paddingUnit + 'rem');
         this.childrenCount = this.countChildren(this.item);
-        if (this.item.isSelected) {
+
+        this.isItem = !this.item.children.length;
+        this.isBranch = !!this.item.children.length;
+    }
+
+    ngAfterViewInit() {
+        if (this.isItem && this.item.isSelected) {
             this.selectedItems.push(this.item);
+            this.itemClicked.emit({
+                item: this.item,
+                isSelection: true,
+                selectedItems: this.selectedItems
+            });
         }
+
+        this._computeClasses();
     }
 
     ngOnChanges() {
         this.updateFilter();
     }
 
-    public select(): void {
-        if (!this.item.isSelected) {
+    public select(label?: string): void {
+        if (label) {
+            this._selectTarget(label);
+        } else if (!this.item.isSelected) {
             this.toggle();
         }
     }
 
-    public unselect(): void {
-        if (this.item.isSelected) {
+    public unselect(label?: string): void {
+        if (label) {
+            this._unselectTarget(label);
+        } else if (this.item.isSelected) {
             this.toggle();
         }
     }
 
     public onItemClicked(): void {
-        const index = this.selectedItems.findIndex(el => el.name === this.item.name);
-        const isSelection = index === -1;
-        this.toggle();
-        if (this.item.children.length) {
-            this.onBranchClicked();
-        }
-        const event: ItemClickedEvent = {
-            item: this.item,
-            selectedItems: [...this.selectedItems],
-            isSelection: isSelection
-        };
-        this.itemClicked.emit(event);
+        this._itemToggle();
     }
 
     public onBranchClicked(): void {
-        if (this.item.isSelected) {
+        if (!this.item.isSelected) {
             this.selectAllChildren();
         } else {
             this.unselectAllChildren();
@@ -119,27 +123,37 @@ export class NgxMultiselectChildrenComponent implements OnInit, OnChanges {
     }
 
     public toggle(): void {
-        this.item.isSelected = !this.item.isSelected;
-        if (this.item.children.length) {
+        if (this.isBranch) {
             this._branchToggle();
         } else {
             this._itemToggle();
         }
-        this._computeClasses();
+    }
+
+    public onClick() {
+        if (this.isBranch) {
+            this.onBranchClicked();
+        } else {
+            this.onItemClicked();
+        }
     }
 
     public onChildItemClicked(event: ItemClickedEvent): void {
         if (event.isSelection) {
-            this.selectedItems.push(event.item);
+            this._selectItem(event.item);
         } else {
-            const index = this.selectedItems.findIndex(el => el.name === event.item.name);
-            this.selectedItems.splice(index, 1);
+            this._unselectItem(event.item);
         }
+
+        console.log(this.item.name, 'selectedItems updated:', this.selectedItems);
+
         if (this.childrenCount === this.selectedItems.length) {
-            this.select();
+            this.item.isSelected = true;
         } else {
-            this.unselect();
+            this.item.isSelected = false;
         }
+
+        this._computeClasses();
         const result: ItemClickedEvent = { ...event, selectedItems: this.selectedItems };
         this.itemClicked.emit(result);
     }
@@ -198,19 +212,70 @@ export class NgxMultiselectChildrenComponent implements OnInit, OnChanges {
     }
 
     private _itemToggle(): void {
-        const index = this.selectedItems.findIndex(el => el.name === this.item.name);
-        if (!this.item.isSelected || index !== -1) {
-            this.selectedItems.splice(0, 1);
+        this.item.isSelected = !this.item.isSelected;
+
+        if (this.item.isSelected) {
+            this._selectItem(this.item);
         } else {
-            this.selectedItems.push(this.item);
+            this._unselectItem(this.item);
         }
+
+        this._computeClasses();
+
+        const event: ItemClickedEvent = {
+            item: this.item,
+            selectedItems: this.selectedItems,
+            isSelection: this.item.isSelected
+        };
+
+        this.itemClicked.emit(event);
     }
 
     private _branchToggle(): void {
+        this.item.isSelected = !this.item.isSelected;
+
         if (this.item.isSelected) {
-            this.children.forEach(child => {
-                child.select();
-            });
+            this.selectAllChildren();
+        } else {
+            this.unselectAllChildren();
+        }
+
+        this._computeClasses();
+    }
+
+    private _unselectItem(item: Item) {
+        const index = this.selectedItems.findIndex(el => el.name === item.name);
+
+        if (index !== -1) {
+            this.selectedItems.splice(index, 1);
+        }
+    }
+
+    private _selectItem(item: Item) {
+        const index = this.selectedItems.findIndex(el => el.name === item.name);
+
+        if (index === -1) {
+            this.selectedItems.push(item);
+        }
+    }
+
+    private _selectTarget(label: string) {
+        if (this.isItem && this.item.name === label && !this.item.isSelected) {
+            this._itemToggle();
+        } else if (this.isBranch && this.item.name === label) {
+            this.selectAllChildren();
+        } else if (this.isBranch) {
+            this.children.forEach(child => child.select(label));
+        }
+    }
+
+    private _unselectTarget(label: string) {
+        if (this.isItem && this.item.name === label && this.item.isSelected) {
+            this._itemToggle();
+        } else if (this.isBranch && this.item.name === label) {
+            this.unselectAllChildren();
+        } else if (this.isBranch) {
+            this.children.forEach(child => child.unselect(label));
         }
     }
 }

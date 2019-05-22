@@ -33,7 +33,7 @@ the component should be declared in your html code like this :
     (itemSelected)="getSelectedItem($event)"
     [items]="items"
     [selectAllButtonLabel]="'Select All'"
-    [unSelectAllButtonLabel]="'Unselect All'"
+    [unselectAllButtonLabel]="'Unselect All'"
     [defaultToggleButtonLabel]="'No Items Selected'"
     [placeholder]="'Search Items'"
     [toggleBtnClass]="'btn-primary w-75'"
@@ -52,7 +52,7 @@ This is a simple interface that describes any parameters for a multiSelect compo
 | (itemSelected)           | ItemSelectedEvent |    ✔️    | function who was called by the event for getting the list of selected items, in the example below the function was called getSelectedItem() | NO                  |
 | items                    | item[]            |    ❌    | parameter item list                                                                                                                         | []                  |
 | selectAllButtonLabel     | string            |    ❌    | button label for select all items                                                                                                           | 'Select All'        |
-| unSelectAllButtonLabel   | string            |    ❌    | button label for unselect all items                                                                                                         | 'Unselect All'      |
+| unselectAllButtonLabel   | string            |    ❌    | button label for unselect all items                                                                                                         | 'Unselect All'      |
 | defaultToggleButtonLabel | string            |    ❌    | label of toggle button in case of none items are selected                                                                                   | 'No Items Selected' |
 | placeholder              | string            |    ❌    | placeholder of research input                                                                                                               | 'Search Items'      |
 | toggleBtnClass           | string            |    ❌    | input for your custom css classes on the toggle button                                                                                      | 'btn-primary w-75'  |

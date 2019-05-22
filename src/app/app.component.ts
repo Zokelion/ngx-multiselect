@@ -27,8 +27,8 @@ export class AppComponent implements OnInit {
                             name: 'Canada',
                             isSelected: false,
                             children: [],
-                            cssClasses: 'bg-primary text-light',
-                            cssSelectedClasse: 'bg-primary text-light'
+                            cssClasses: '',
+                            cssSelectedClasses: 'bg-success text-light'
                         },
                         {
                             id: 4,
@@ -40,57 +40,57 @@ export class AppComponent implements OnInit {
                                     name: 'Arizona',
                                     isSelected: false,
                                     children: [],
-                                    cssClasses: 'bg-primary text-light',
-                                    cssSelectedClasse: 'bg-primary text-light'
+                                    cssClasses: '',
+                                    cssSelectedClasses: 'bg-success text-light'
                                 },
                                 {
                                     id: 15,
                                     name: 'Washington',
                                     isSelected: true,
                                     children: [],
-                                    cssClasses: 'bg-primary text-light',
-                                    cssSelectedClasse: 'bg-primary text-light'
+                                    cssClasses: '',
+                                    cssSelectedClasses: 'bg-success text-light'
                                 }
                             ],
-                            cssClasses: 'bg-primary text-light',
-                            cssSelectedClasse: 'bg-primary text-light'
+                            cssClasses: '',
+                            cssSelectedClasses: 'bg-success text-light'
                         },
                         {
                             id: 5,
                             name: 'Mexico',
                             isSelected: true,
                             children: [],
-                            cssClasses: 'bg-primary text-light',
-                            cssSelectedClasse: 'bg-primary text-light'
+                            cssClasses: '',
+                            cssSelectedClasses: 'bg-success text-light'
                         }
                     ],
-                    cssClasses: 'bg-primary text-light',
-                    cssSelectedClasse: 'bg-primary text-light'
+                    cssClasses: '',
+                    cssSelectedClasses: 'bg-success text-light'
                 },
                 {
                     id: 6,
                     name: 'Europe',
-                    isSelected: false,
+                    isSelected: true,
                     children: [
                         {
                             id: 7,
                             name: 'France',
                             isSelected: true,
                             children: [],
-                            cssClasses: 'bg-primary text-light',
-                            cssSelectedClasse: 'bg-primary text-light'
+                            cssClasses: '',
+                            cssSelectedClasses: 'bg-success text-light'
                         },
                         {
                             id: 8,
                             name: 'Deutschland',
                             isSelected: true,
                             children: [],
-                            cssClasses: 'bg-primary text-light',
-                            cssSelectedClasse: 'bg-primary text-light'
+                            cssClasses: '',
+                            cssSelectedClasses: 'bg-success text-light'
                         }
                     ],
-                    cssClasses: 'bg-primary text-light',
-                    cssSelectedClasse: 'bg-primary text-light'
+                    cssClasses: '',
+                    cssSelectedClasses: 'bg-success text-light'
                 },
                 {
                     id: 9,
@@ -102,46 +102,45 @@ export class AppComponent implements OnInit {
                             name: 'China',
                             isSelected: false,
                             children: [],
-                            cssClasses: 'bg-primary text-light',
-                            cssSelectedClasse: 'bg-primary text-light'
+                            cssClasses: '',
+                            cssSelectedClasses: 'bg-success text-light'
                         },
                         {
                             id: 11,
                             name: 'Japan',
                             isSelected: true,
                             children: [],
-                            cssClasses: 'bg-primary text-light',
-                            cssSelectedClasse: 'bg-primary text-light'
+                            cssClasses: '',
+                            cssSelectedClasses: 'bg-success text-light'
                         }
                     ],
-                    cssClasses: 'bg-primary text-light',
-                    cssSelectedClasse: 'bg-primary text-light'
+                    cssClasses: '',
+                    cssSelectedClasses: 'bg-success text-light'
                 },
                 {
                     id: 12,
                     name: 'Oceania',
-                    isSelected: false,
+                    isSelected: true,
                     children: [
                         {
                             id: 13,
                             name: 'Australia',
                             isSelected: true,
                             children: [],
-                            cssClasses: 'bg-primary text-light',
-                            cssSelectedClasse: 'bg-primary text-light'
+                            cssClasses: '',
+                            cssSelectedClasses: 'bg-success text-light'
                         }
                     ],
-                    cssClasses: 'bg-primary text-light',
-                    cssSelectedClasse: 'bg-primary text-light'
+                    cssClasses: '',
+                    cssSelectedClasses: 'bg-success text-light'
                 }
             ],
-            cssClasses: 'bg-primary text-light',
-            cssSelectedClasse: 'bg-primary text-light'
+            cssClasses: '',
+            cssSelectedClasses: 'bg-success text-light'
         });
     }
 
     public childSelected(eventItem: ItemClickedEvent): void {
-        console.log(eventItem);
         this.selectedItems = eventItem.selectedItems;
     }
 }

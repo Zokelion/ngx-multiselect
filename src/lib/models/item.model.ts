@@ -4,5 +4,5 @@ export class Item {
     isSelected: boolean;
     children: Item[];
     cssClasses: string;
-    cssSelectedClasse: string;
+    cssSelectedClasses: string;
 }

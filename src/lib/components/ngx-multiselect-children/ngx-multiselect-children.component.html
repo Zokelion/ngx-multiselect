@@ -2,15 +2,14 @@
     <li
         #element
         role="menuitem"
-        class="pointer {{ itemClass }}"
+        class="pointer {{ item.cssClasses }}"
         [ngClass]="selectedCssClass"
         (click)="onClick()"
     >
         <div
             *ngIf="!useClassicCheckbox"
             [ngClass]="{
-                'font-weight-bold': item.children.length > 0,
-                'font-italic': item.isSelected
+                'font-weight-bold': item.children.length > 0
             }"
         >
             <div class="m-0">
@@ -39,7 +38,6 @@
         [includeContainer]="includeContainer"
         [item]="item"
         [useClassicCheckbox]="useClassicCheckbox"
-        [itemClass]="itemClass"
         [depth]="depth + 1"
     ></ngx-multiselect-children>
 </ul>

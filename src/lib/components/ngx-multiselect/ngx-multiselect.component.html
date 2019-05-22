@@ -53,11 +53,10 @@
         *ngFor="let item of items"
         [filter]="filter.name"
         [isFirstLevel]="true"
-        (itemSelected)="childSelected($event)"
+        (itemClicked)="onChildItemClicked($event)"
         [includeContainer]="includeContainer"
         [item]="item"
         [useClassicCheckbox]="useClassicCheckbox"
-        [itemClass]="itemClass"
         [depth]="0"
     ></ngx-multiselect-children>
 </div>

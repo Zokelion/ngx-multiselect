@@ -14,7 +14,6 @@ import {
 } from '@angular/core';
 import { ItemClickedEvent } from '../../models/item-clicked-event.model';
 import { Item } from '../../models/item.model';
-import { MultiSelectService } from '../../services/multi-select.service';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -35,9 +34,15 @@ export class NgxMultiselectChildrenComponent implements OnInit, OnChanges, After
     @Input()
     useClassicCheckbox = false;
     @Input()
-    public itemClass = '';
-    @Input()
     public depth: number;
+    @Output()
+    public itemClicked: EventEmitter<ItemClickedEvent> = new EventEmitter<ItemClickedEvent>();
+
+    @ViewChild('element')
+    public element: ElementRef<HTMLLIElement>;
+
+    @ViewChildren(NgxMultiselectChildrenComponent)
+    public children: QueryList<NgxMultiselectChildrenComponent>;
 
     public selectedCssClass: any;
 
@@ -53,15 +58,6 @@ export class NgxMultiselectChildrenComponent implements OnInit, OnChanges, After
     public isBranch: boolean;
 
     public isItem: boolean;
-
-    @Output()
-    public itemClicked: EventEmitter<ItemClickedEvent> = new EventEmitter<ItemClickedEvent>();
-
-    @ViewChild('element')
-    public element: ElementRef<HTMLLIElement>;
-
-    @ViewChildren(NgxMultiselectChildrenComponent)
-    public children: QueryList<NgxMultiselectChildrenComponent>;
 
     constructor(private _renderer: Renderer2) {}
 
@@ -105,8 +101,10 @@ export class NgxMultiselectChildrenComponent implements OnInit, OnChanges, After
     public unselect(label?: string): void {
         if (label) {
             this._unselectTarget(label);
-        } else if (this.item.isSelected) {
+        } else if (this.isItem && this.item.isSelected) {
             this.toggle();
+        } else if (this.isBranch) {
+            this.unselectAllChildren();
         }
     }
 
@@ -144,8 +142,6 @@ export class NgxMultiselectChildrenComponent implements OnInit, OnChanges, After
         } else {
             this._unselectItem(event.item);
         }
-
-        console.log(this.item.name, 'selectedItems updated:', this.selectedItems);
 
         if (this.childrenCount === this.selectedItems.length) {
             this.item.isSelected = true;
@@ -203,12 +199,15 @@ export class NgxMultiselectChildrenComponent implements OnInit, OnChanges, After
     }
 
     private _computeClasses(): void {
-        this.selectedCssClass = {
-            'd-none': !this.isVisible,
-            'd-block': this.isVisible,
-            'px-0': this.isFirstLevel
-        };
-        this.selectedCssClass[this.item.cssSelectedClasse] = this.item.isSelected;
+        setTimeout(() => {
+            this.selectedCssClass = {
+                'd-none': !this.isVisible,
+                'd-block': this.isVisible,
+                'px-0': this.isFirstLevel,
+                'font-italic': this.item.isSelected
+            };
+            this.selectedCssClass[this.item.cssSelectedClasses] = this.item.isSelected;
+        }, 0);
     }
 
     private _itemToggle(): void {

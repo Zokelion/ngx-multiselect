@@ -11,7 +11,6 @@ import {
 import { ItemClickedEvent } from '../../models/item-clicked-event.model';
 import { Item } from '../../models/item.model';
 import { faCaretRight, faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
-import { MultiSelectService } from '../../services/multi-select.service';
 import { NgxMultiselectChildrenComponent } from '../ngx-multiselect-children/ngx-multiselect-children.component';
 
 @Component({
@@ -23,14 +22,9 @@ import { NgxMultiselectChildrenComponent } from '../ngx-multiselect-children/ngx
     host: {
         '(document:click)': 'onClick($event)'
     },
-    providers: [MultiSelectService]
+    providers: []
 })
 export class NgxMultiselectComponent implements OnInit {
-    // icons
-    public faCaretRight = faCaretRight;
-    public faCheck = faCheck;
-    public faTimes = faTimes;
-
     @Input()
     public items: Item[] = [];
     @Input()
@@ -55,10 +49,8 @@ export class NgxMultiselectComponent implements OnInit {
     public enableResearch = true;
     @Input()
     public disabled = false;
-
     @Output()
     public itemSelected: EventEmitter<ItemClickedEvent> = new EventEmitter<ItemClickedEvent>();
-
     @ViewChildren(NgxMultiselectChildrenComponent)
     children: QueryList<NgxMultiselectChildrenComponent>;
 
@@ -68,26 +60,40 @@ export class NgxMultiselectComponent implements OnInit {
     public toggleButtonLabel: string;
     public includeContainer: boolean;
     public state = 'closed';
+    public timeout = null;
+    // icons
+    public faCaretRight = faCaretRight;
+    public faCheck = faCheck;
+    public faTimes = faTimes;
 
-    constructor(private _selectAllItemsService: MultiSelectService, private _eref: ElementRef) {}
+    constructor(private _eref: ElementRef) {}
 
     ngOnInit() {
-        this.setLabel();
+        this.items.forEach(item => {
+            this.selectedItems.push(...this._getSelectedItems(item));
+        });
     }
 
-    public childSelected(eventItem: ItemClickedEvent): void {
-        if (eventItem.item.isSelected && this.selectedItems.indexOf(eventItem.item) === -1) {
-            this.selectedItems.push(eventItem.item);
-            eventItem.selectedItems = this.selectedItems;
-        } else if (
-            !eventItem.item.isSelected &&
-            this.selectedItems.indexOf(eventItem.item) !== -1
-        ) {
-            this.selectedItems.splice(this.selectedItems.indexOf(eventItem.item), 1);
+    public onChildItemClicked(event: ItemClickedEvent): void {
+        const index = this.selectedItems.findIndex(el => el.name === event.item.name);
+        if (event.isSelection && index === -1) {
+            this.selectedItems.push(event.item);
+            event.selectedItems = this.selectedItems;
+        } else if (!event.isSelection && index !== -1) {
+            this.selectedItems.splice(index, 1);
         }
-        eventItem.selectedItems = this.selectedItems;
+        event.selectedItems = this.selectedItems;
+        if (this.timeout) {
+            clearTimeout(this.timeout);
+        }
+        this.timeout = setTimeout(() => {
+            this.emitEvent(event);
+        }, 250);
+    }
+
+    public emitEvent(event: ItemClickedEvent) {
         this.setLabel();
-        this.itemSelected.emit(eventItem);
+        this.itemSelected.emit(event);
     }
 
     public selectAllItems(): void {
@@ -103,13 +109,11 @@ export class NgxMultiselectComponent implements OnInit {
     }
 
     public setLabel(): void {
-        setTimeout(() => {
-            if (!this.selectedItems || !this.selectedItems.length) {
-                this.toggleButtonLabel = this.defaultToggleButtonLabel;
-            } else {
-                this.toggleButtonLabel = this.selectedItems[0].name;
-            }
-        }, 0);
+        if (!this.selectedItems || !this.selectedItems.length) {
+            this.toggleButtonLabel = this.defaultToggleButtonLabel;
+        } else {
+            this.toggleButtonLabel = this.selectedItems[0].name;
+        }
     }
 
     animateToggle() {
@@ -122,5 +126,18 @@ export class NgxMultiselectComponent implements OnInit {
                 this.animateToggle();
             }
         }
+    }
+
+    private _getSelectedItems(item: Item): Item[] {
+        if (item.children.length) {
+            const result = [];
+            item.children.forEach(child => {
+                result.push(...this._getSelectedItems(child));
+            });
+            return result;
+        } else if (item.isSelected) {
+            return [item];
+        }
+        return [];
     }
 }

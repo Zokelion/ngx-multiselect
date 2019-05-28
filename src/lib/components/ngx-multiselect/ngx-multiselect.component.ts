@@ -6,7 +6,8 @@ import {
     Input,
     ElementRef,
     ViewChildren,
-    QueryList
+    QueryList,
+    NgZone
 } from '@angular/core';
 import { ItemClickedEvent } from '../../models/item-clicked-event.model';
 import { Item } from '../../models/item.model';
@@ -61,12 +62,13 @@ export class NgxMultiselectComponent implements OnInit {
     public includeContainer: boolean;
     public state = 'closed';
     public timeout = null;
+    public unselectAll = false;
     // icons
     public faCaretRight = faCaretRight;
     public faCheck = faCheck;
     public faTimes = faTimes;
 
-    constructor(private _eref: ElementRef) {}
+    constructor(private _eref: ElementRef, private _zone: NgZone) {}
 
     ngOnInit() {
         this.items.forEach(item => {
@@ -75,25 +77,35 @@ export class NgxMultiselectComponent implements OnInit {
     }
 
     public onChildItemClicked(event: ItemClickedEvent): void {
-        const index = this.selectedItems.findIndex(el => el.name === event.item.name);
-        if (event.isSelection && index === -1) {
-            this.selectedItems.push(event.item);
-            event.selectedItems = this.selectedItems;
-        } else if (!event.isSelection && index !== -1) {
-            this.selectedItems.splice(index, 1);
-        }
-        event.selectedItems = this.selectedItems;
-        if (this.timeout) {
-            clearTimeout(this.timeout);
-        }
-        this.timeout = setTimeout(() => {
-            this.emitEvent(event);
-        }, 250);
+        this._zone.runOutsideAngular(() => {
+            if (!this.unselectAll) {
+                const index = this.selectedItems.findIndex(el => el.name === event.item.name);
+                if (event.isSelection && index === -1) {
+                    this.selectedItems.push(event.item);
+                } else if (!event.isSelection && index !== -1) {
+                    this.selectedItems.splice(index, 1);
+                }
+                event.selectedItems = this.selectedItems;
+            }
+            if (this.timeout) {
+                clearTimeout(this.timeout);
+            }
+
+            this.timeout = setTimeout(() => {
+                this._zone.run(() => {
+                    this.emitEvent(event);
+                });
+            }, 250);
+        });
     }
 
     public emitEvent(event: ItemClickedEvent) {
-        this.setLabel();
-        this.itemSelected.emit(event);
+        if (this.unselectAll) {
+            this.unselectAll = false;
+        } else {
+            this.setLabel();
+            this.itemSelected.emit(event);
+        }
     }
 
     public selectAllItems(): void {
@@ -103,6 +115,10 @@ export class NgxMultiselectComponent implements OnInit {
     }
 
     public unselectAllItems(): void {
+        this.unselectAll = true;
+        this.itemSelected.emit({ item: null, isSelection: false, selectedItems: [] });
+        this.selectedItems = [];
+        this.setLabel();
         this.children.forEach((child: NgxMultiselectChildrenComponent) => {
             child.unselect();
         });

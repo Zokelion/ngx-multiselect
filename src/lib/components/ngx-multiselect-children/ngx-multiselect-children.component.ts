@@ -45,6 +45,7 @@ export class NgxMultiselectChildrenComponent implements OnInit, OnChanges, After
     public children: QueryList<NgxMultiselectChildrenComponent>;
 
     public selectedCssClass: any;
+    public cssClass: any;
 
     //icon
     public faCheck = faCheck;
@@ -196,6 +197,7 @@ export class NgxMultiselectChildrenComponent implements OnInit, OnChanges, After
 
     public updateFilter(): void {
         this.isVisible = this.matchFilter(this.item);
+        this._computeClasses();
     }
 
     private _computeClasses(): void {
@@ -207,6 +209,11 @@ export class NgxMultiselectChildrenComponent implements OnInit, OnChanges, After
                 'font-italic': this.item.isSelected
             };
             this.selectedCssClass[this.item.cssSelectedClasses] = this.item.isSelected;
+            this.cssClass = {
+                'd-none': !this.isVisible,
+                'd-block': this.isVisible
+            };
+            this.cssClass[this.item.cssSelectedClasses] = this.isVisible;
         }, 0);
     }
 

@@ -1,4 +1,7 @@
-<ul class="no-style-list m-0 mt-1" [ngClass]="{ 'pl-0': isFirstLevel, 'pl-3': !isFirstLevel }">
+<ul
+    class="no-style-list m-0 mt-1"
+    [ngClass]="{ 'pl-0': isFirstLevel, 'pl-3': !isFirstLevel, 'd-none': !isVisible }"
+>
     <li
         #element
         role="menuitem"
